@@ -1,5 +1,7 @@
 # JSON Thing
 
+**🔗 Live app: [jsonthing.com](https://jsonthing.com)**
+
 JSON Thing is a web based JSON viewer that turns JSON files into easily navigatable
 tables with advanced filtering and sorting options.
 
