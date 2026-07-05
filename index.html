@@ -5,178 +5,164 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>JSON Thing</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    darkMode: 'class',
-    theme: { extend: {
-      colors: {
-        border:'hsl(var(--border))', input:'hsl(var(--input))', ring:'hsl(var(--ring))',
-        background:'hsl(var(--background))', foreground:'hsl(var(--foreground))',
-        primary:{DEFAULT:'hsl(var(--primary))', foreground:'hsl(var(--primary-foreground))'},
-        secondary:{DEFAULT:'hsl(var(--secondary))', foreground:'hsl(var(--secondary-foreground))'},
-        destructive:{DEFAULT:'hsl(var(--destructive))', foreground:'hsl(var(--destructive-foreground))'},
-        muted:{DEFAULT:'hsl(var(--muted))', foreground:'hsl(var(--muted-foreground))'},
-        accent:{DEFAULT:'hsl(var(--accent))', foreground:'hsl(var(--accent-foreground))'},
-        popover:{DEFAULT:'hsl(var(--popover))', foreground:'hsl(var(--popover-foreground))'},
-        card:{DEFAULT:'hsl(var(--card))', foreground:'hsl(var(--card-foreground))'},
-      },
-      borderRadius:{ lg:'var(--radius)', md:'calc(var(--radius) - 2px)', sm:'calc(var(--radius) - 4px)' },
-    }}
-  }
-</script>
+<!-- Bulma -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+<!-- DataTables + SearchBuilder, Bulma (bm) styled -->
+<link href="https://cdn.datatables.net/v/bm/dt-2.3.8/date-1.6.3/sb-1.8.4/datatables.min.css" rel="stylesheet" integrity="sha384-9kFpbG1Thatr37LA1sBYA1PVwYgUVVW/joPxZcgdmzafCZqJ90V97kuXAFQr8AJq" crossorigin="anonymous">
+<!-- Buttons + Column visibility (ColVis) -->
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.bulma.min.css">
+
 <style>
-  :root{
-    --background:0 0% 100%; --foreground:222.2 84% 4.9%;
-    --card:0 0% 100%; --card-foreground:222.2 84% 4.9%;
-    --popover:0 0% 100%; --popover-foreground:222.2 84% 4.9%;
-    --primary:222.2 47.4% 11.2%; --primary-foreground:210 40% 98%;
-    --secondary:210 40% 96.1%; --secondary-foreground:222.2 47.4% 11.2%;
-    --muted:210 40% 96.1%; --muted-foreground:215.4 16.3% 46.9%;
-    --accent:210 40% 96.1%; --accent-foreground:222.2 47.4% 11.2%;
-    --destructive:0 84.2% 60.2%; --destructive-foreground:210 40% 98%;
-    --border:214.3 31.8% 91.4%; --input:214.3 31.8% 91.4%; --ring:222.2 84% 4.9%;
-    --radius:0.5rem;
-    color-scheme:light;
+  html,body{ height:100%; }
+  body{ display:flex; flex-direction:column; }
+  .navbar .slogan{ color:#b5c7d3; font-size:.72rem; margin-left:.6rem; }
+  /* always-visible burger toggle */
+  .app-burger{ flex-direction:column; justify-content:center; gap:4px; cursor:pointer; }
+  .app-burger span{ display:block; height:2px; width:20px; background:currentColor; border-radius:2px; }
+
+  .app-body{ flex:1 1 auto; min-height:0; display:flex; background:var(--bulma-scheme-main); }
+  .app-sidebar{ flex:0 0 340px; width:340px; overflow:auto; border-right:1px solid var(--bulma-border-weak); background:var(--bulma-scheme-main-bis); }
+  .app-main{ flex:1 1 auto; min-width:0; overflow:auto; }
+  .app-body.is-collapsed .app-sidebar{ display:none; }
+
+  .app-sidebar textarea{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:12px; min-height:230px; }
+  #tabs{ margin-bottom:1rem; }
+
+  table.dataTable td .cell{ display:block; max-height:var(--cellh,none); overflow:auto; }
+  table.dataTable td a.lnk{ font-weight:600; }
+  table.dataTable td .muted{ color:var(--bulma-text-weak); }
+
+  /* ColVis (column-visibility) dropdown: opaque panel so it doesn't
+     bleed into the table underneath */
+  .dt-button-collection{
+    background:var(--bulma-scheme-main);
+    border:1px solid var(--bulma-border);
+    border-radius:6px;
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    padding:.4rem;
+    z-index:2001;
+    display:flex;
+    flex-direction:column;
   }
-  .dark{
-    --background:222.2 84% 4.9%; --foreground:210 40% 98%;
-    --card:222.2 84% 4.9%; --card-foreground:210 40% 98%;
-    --popover:222.2 84% 4.9%; --popover-foreground:210 40% 98%;
-    --primary:210 40% 98%; --primary-foreground:222.2 47.4% 11.2%;
-    --secondary:217.2 32.6% 17.5%; --secondary-foreground:210 40% 98%;
-    --muted:217.2 32.6% 17.5%; --muted-foreground:215 20.2% 65.1%;
-    --accent:217.2 32.6% 17.5%; --accent-foreground:210 40% 98%;
-    --destructive:0 62.8% 30.6%; --destructive-foreground:210 40% 98%;
-    --border:217.2 32.6% 17.5%; --input:217.2 32.6% 17.5%; --ring:212.7 26.8% 83.9%;
-    color-scheme:dark;
+  .dt-button-collection .dt-button{
+    display:block;
+    width:100%;
+    text-align:left;
+    margin:0;
+    background:transparent;
+    color:var(--bulma-text);
   }
-  html,body,#root{height:100%}
-  body{margin:0}
-  ::-webkit-scrollbar{width:10px;height:10px}
-  ::-webkit-scrollbar-thumb{background:hsl(var(--border));border-radius:8px}
-  select option{ background-color:hsl(var(--popover)); color:hsl(var(--popover-foreground)); }
-  select optgroup{ background-color:hsl(var(--popover)); color:hsl(var(--popover-foreground)); }
+  .dt-button-collection .dt-button:hover{ background:var(--bulma-scheme-main-bis); }
+  .dt-button-collection .dt-button.active{ background:var(--bulma-primary,#485fc7); color:#fff; }
+  /* dim the page behind an open collection */
+  .dt-button-background{ background:rgba(0,0,0,.15); }
+
+  /* record modal: one block per record in the ancestry chain */
+  .rec-node{ margin-bottom:1rem; }
+  .rec-node + .rec-node{ border-top:1px solid var(--bulma-border-weak); padding-top:1rem; }
+  .rec-head{ display:flex; align-items:center; gap:.5rem; margin-bottom:.5rem; }
+  .rec-head .lvl{ flex:0 0 auto; text-transform:capitalize; }
+  .rec-head .nm{ font-weight:700; }
+  .rec-fields{ width:100%; }
+  .rec-fields th{ width:38%; text-align:left; vertical-align:top; color:var(--bulma-text-weak);
+                  font-weight:600; padding:.15rem .5rem .15rem 0; white-space:nowrap; }
+  .rec-fields td{ vertical-align:top; padding:.15rem 0; word-break:break-word; }
 </style>
 
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/": "https://esm.sh/react@18.3.1/",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/": "https://esm.sh/react-dom@18.3.1/",
-    "@tanstack/react-table": "https://esm.sh/@tanstack/react-table@8.20.5?deps=react@18.3.1,react-dom@18.3.1"
-  }
-}
+<!-- set the Bulma theme before paint (saved choice, else OS preference) -->
+<script>
+  (function(){
+    var t;
+    try{ t = localStorage.getItem('jtd-theme'); }catch(e){}
+    if(t!=='light' && t!=='dark'){
+      t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', t);
+  })();
 </script>
-<script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
 </head>
-<body class="bg-background text-foreground">
-<div id="root"></div>
+<body>
 
-<script type="text/babel" data-type="module" data-presets="react">
-import React, { useState, useMemo, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
-import {
-  useReactTable, getCoreRowModel, getFilteredRowModel, getSortedRowModel,
-  getPaginationRowModel, getFacetedRowModel, getFacetedUniqueValues, flexRender,
-} from '@tanstack/react-table';
+<!-- HEADER: name + slogan + sidebar toggle -->
+<nav class="navbar is-dark" role="navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item app-burger" id="sidebarToggle" role="button" title="Toggle input sidebar">
+      <span></span><span></span><span></span>
+    </a>
+    <div class="navbar-item">
+      <span class="has-text-weight-bold">JSON Thing</span>
+      <span class="slogan">The best JSON explorer with support for nested data and complex filtering and sorting.</span>
+    </div>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item" id="themeToggle" role="button" title="Toggle light/dark mode" aria-label="Toggle theme"><span id="themeIcon">🌙</span></a>
+      <a class="navbar-item" href="https://github.com/ryn-cx/json-thing" target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A8.001 8.001 0 0 1 8 0Z"/></svg></a>
+    </div>
+  </div>
+</nav>
 
+<div class="app-body">
+  <!-- LEFT COLUMN: all input options -->
+  <aside class="app-sidebar">
+    <div class="p-4">
+      <h2 class="title is-6 mb-3">JSON input</h2>
+      <div class="field">
+        <label class="label is-small">Paste JSON</label>
+        <div class="control"><textarea id="json" class="textarea is-small" spellcheck="false"></textarea></div>
+      </div>
+      <div class="field">
+        <label class="label is-small">ID keys</label>
+        <div class="control"><input id="idkeys" class="input is-small" type="text" value="id" placeholder="id"></div>
+      </div>
+      <div class="field">
+        <label class="label is-small">Name keys</label>
+        <div class="control"><input id="namekeys" class="input is-small" type="text" value="name" placeholder="name"></div>
+      </div>
+      <div class="field">
+        <label class="label is-small">Max cell height (px)</label>
+        <div class="control"><input id="cellheight" class="input is-small" type="number" min="0" value="72" placeholder="72"></div>
+      </div>
+      <button class="button is-primary is-fullwidth is-small" id="loadSample" type="button">Load sample</button>
+      <p class="help">ID / Name keys are comma- or space-separated; first match wins. 0 height = no limit. Tables update as you type.</p>
+      <p id="error" class="help is-danger"></p>
+    </div>
+  </aside>
+
+  <!-- MAIN COLUMN -->
+  <main class="app-main">
+    <div class="p-4">
+      <div id="tabs" class="buttons are-small"></div>
+      <table id="grid" class="table is-striped is-hoverable is-narrow" style="width:100%"></table>
+    </div>
+  </main>
+</div>
+
+<!-- RECORD MODAL: a record's ancestry chain (self → parent → … → root),
+     each a link to that record's table filtered to just that record -->
+<div class="modal" id="recModal">
+  <div class="modal-background" data-close="1"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title" id="recModalTitle">Record</p>
+      <button class="delete" aria-label="close" data-close="1"></button>
+    </header>
+    <section class="modal-card-body">
+      <div id="recModalBody"></div>
+    </section>
+  </div>
+</div>
+
+<!-- jQuery + DataTables(bulma) + SearchBuilder -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/v/bm/dt-2.3.8/date-1.6.3/sb-1.8.4/datatables.min.js" integrity="sha384-S4e+nR35BknwgRkxiQsGx2hSk7siXmCvuj/Q7XnL11uUFgcFvE0NHHPGiDXU05Sj" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.min.js"></script>
+
+<script>
 /* =====================================================================
- * utils
+ * MODEL — identical nested-JSON flattening to the main app.
  * ===================================================================== */
-const cn = (...a) => a.filter(Boolean).join(' ');
-const uid = () => Math.random().toString(36).slice(2, 9);
-
-/* =====================================================================
- * theme colors — the full Tailwind / shadcn color library (v3.shadcn.com/colors).
- * Picking a swatch recolors the app's --primary / --ring CSS variables.
- * ===================================================================== */
-const TW_SHADES=[50,100,200,300,400,500,600,700,800,900,950];
-const TW_COLORS={
-  slate:['#f8fafc','#f1f5f9','#e2e8f0','#cbd5e1','#94a3b8','#64748b','#475569','#334155','#1e293b','#0f172a','#020617'],
-  gray:['#f9fafb','#f3f4f6','#e5e7eb','#d1d5db','#9ca3af','#6b7280','#4b5563','#374151','#1f2937','#111827','#030712'],
-  zinc:['#fafafa','#f4f4f5','#e4e4e7','#d4d4d8','#a1a1aa','#71717a','#52525b','#3f3f46','#27272a','#18181b','#09090b'],
-  neutral:['#fafafa','#f5f5f5','#e5e5e5','#d4d4d4','#a3a3a3','#737373','#525252','#404040','#262626','#171717','#0a0a0a'],
-  stone:['#fafaf9','#f5f5f4','#e7e5e4','#d6d3d1','#a8a29e','#78716c','#57534e','#44403c','#292524','#1c1917','#0c0a09'],
-  red:['#fef2f2','#fee2e2','#fecaca','#fca5a5','#f87171','#ef4444','#dc2626','#b91c1c','#991b1b','#7f1d1d','#450a0a'],
-  orange:['#fff7ed','#ffedd5','#fed7aa','#fdba74','#fb923c','#f97316','#ea580c','#c2410c','#9a3412','#7c2d12','#431407'],
-  amber:['#fffbeb','#fef3c7','#fde68a','#fcd34d','#fbbf24','#f59e0b','#d97706','#b45309','#92400e','#78350f','#451a03'],
-  yellow:['#fefce8','#fef9c3','#fef08a','#fde047','#facc15','#eab308','#ca8a04','#a16207','#854d0e','#713f12','#422006'],
-  lime:['#f7fee7','#ecfccb','#d9f99d','#bef264','#a3e635','#84cc16','#65a30d','#4d7c0f','#3f6212','#365314','#1a2e05'],
-  green:['#f0fdf4','#dcfce7','#bbf7d0','#86efac','#4ade80','#22c55e','#16a34a','#15803d','#166534','#14532d','#052e16'],
-  emerald:['#ecfdf5','#d1fae5','#a7f3d0','#6ee7b7','#34d399','#10b981','#059669','#047857','#065f46','#064e3b','#022c22'],
-  teal:['#f0fdfa','#ccfbf1','#99f6e4','#5eead4','#2dd4bf','#14b8a6','#0d9488','#0f766e','#115e59','#134e4a','#042f2e'],
-  cyan:['#ecfeff','#cffafe','#a5f3fc','#67e8f9','#22d3ee','#06b6d4','#0891b2','#0e7490','#155e75','#164e63','#083344'],
-  sky:['#f0f9ff','#e0f2fe','#bae6fd','#7dd3fc','#38bdf8','#0ea5e9','#0284c7','#0369a1','#075985','#0c4a6e','#082f49'],
-  blue:['#eff6ff','#dbeafe','#bfdbfe','#93c5fd','#60a5fa','#3b82f6','#2563eb','#1d4ed8','#1e40af','#1e3a8a','#172554'],
-  indigo:['#eef2ff','#e0e7ff','#c7d2fe','#a5b4fc','#818cf8','#6366f1','#4f46e5','#4338ca','#3730a3','#312e81','#1e1b4b'],
-  violet:['#f5f3ff','#ede9fe','#ddd6fe','#c4b5fd','#a78bfa','#8b5cf6','#7c3aed','#6d28d9','#5b21b6','#4c1d95','#2e1065'],
-  purple:['#faf5ff','#f3e8ff','#e9d5ff','#d8b4fe','#c084fc','#a855f7','#9333ea','#7e22ce','#6b21a8','#581c87','#3b0764'],
-  fuchsia:['#fdf4ff','#fae8ff','#f5d0fe','#f0abfc','#e879f9','#d946ef','#c026d3','#a21caf','#86198f','#701a75','#4a044e'],
-  pink:['#fdf2f8','#fce7f3','#fbcfe8','#f9a8d4','#f472b6','#ec4899','#db2777','#be185d','#9d174d','#831843','#500724'],
-  rose:['#fff1f2','#ffe4e6','#fecdd3','#fda4af','#fb7185','#f43f5e','#e11d48','#be123c','#9f1239','#881337','#4c0519'],
-};
-function hexToHsl(hex){
-  let h=hex.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join('');
-  const r=parseInt(h.slice(0,2),16)/255, g=parseInt(h.slice(2,4),16)/255, b=parseInt(h.slice(4,6),16)/255;
-  const max=Math.max(r,g,b), min=Math.min(r,g,b), l=(max+min)/2, d=max-min; let hue=0,s=0;
-  if(d!==0){
-    s=l>0.5? d/(2-max-min) : d/(max+min);
-    if(max===r) hue=(g-b)/d+(g<b?6:0); else if(max===g) hue=(b-r)/d+2; else hue=(r-g)/d+4;
-    hue/=6;
-  }
-  return (hue*360).toFixed(1)+' '+(s*100).toFixed(1)+'% '+(l*100).toFixed(1)+'%';
-}
-function fgForHex(hex){
-  let h=hex.replace('#',''); if(h.length===3) h=h.split('').map(c=>c+c).join('');
-  const r=parseInt(h.slice(0,2),16), g=parseInt(h.slice(2,4),16), b=parseInt(h.slice(4,6),16);
-  return (0.299*r+0.587*g+0.114*b)>150 ? '222.2 47.4% 11.2%' : '210 40% 98%';
-}
-const THEME_VARS=['--primary','--primary-foreground','--ring','--background','--foreground',
-  '--card','--card-foreground','--popover','--popover-foreground','--secondary','--secondary-foreground',
-  '--muted','--muted-foreground','--accent','--accent-foreground','--border','--input'];
-function applyThemeColor(name, dark){
-  const root=document.documentElement;
-  const shades = name && TW_COLORS[name];
-  if(!shades){ THEME_VARS.forEach(v=>root.style.removeProperty(v)); return; }
-  // pick the shades automatically: a strong 600 for light, a brighter 500 for dark
-  const primaryHex = shades[dark?5:6];
-  const hsl=hexToHsl(primaryHex);
-  const [H,S]=hexToHsl(shades[5]).split(' ').map(parseFloat);  // hue/saturation from the 500 swatch
-  const sc=(mult,cap)=> Math.min(S*mult, cap).toFixed(1);  // hue-tinted neutral saturation, scaled to the pick
-  const set=(k,v)=> root.style.setProperty(k, v);
-  // accent
-  set('--primary', hsl); set('--ring', hsl); set('--primary-foreground', fgForHex(primaryHex));
-  // neutrals, tinted toward the chosen hue (mode-appropriate lightness)
-  if(dark){
-    set('--background', `${H} ${sc(0.5,30)}% 5%`);   set('--foreground', `${H} ${sc(0.3,20)}% 98%`);
-    set('--card', `${H} ${sc(0.5,30)}% 6%`);          set('--card-foreground', `${H} ${sc(0.3,20)}% 98%`);
-    set('--popover', `${H} ${sc(0.5,30)}% 6%`);       set('--popover-foreground', `${H} ${sc(0.3,20)}% 98%`);
-    set('--secondary', `${H} ${sc(0.4,30)}% 16%`);    set('--secondary-foreground', `${H} ${sc(0.3,20)}% 98%`);
-    set('--muted', `${H} ${sc(0.4,30)}% 16%`);        set('--muted-foreground', `${H} ${sc(0.2,15)}% 65%`);
-    set('--accent', `${H} ${sc(0.4,30)}% 18%`);       set('--accent-foreground', `${H} ${sc(0.3,20)}% 98%`);
-    set('--border', `${H} ${sc(0.4,30)}% 17%`);       set('--input', `${H} ${sc(0.4,30)}% 17%`);
-  } else {
-    set('--background', `${H} ${sc(0.7,45)}% 96.5%`); set('--foreground', `${H} ${sc(0.5,30)}% 6%`);
-    set('--card', `${H} ${sc(0.6,40)}% 98%`);         set('--card-foreground', `${H} ${sc(0.5,30)}% 6%`);
-    set('--popover', `${H} ${sc(0.6,40)}% 98%`);      set('--popover-foreground', `${H} ${sc(0.5,30)}% 6%`);
-    set('--secondary', `${H} ${sc(0.6,35)}% 93%`);    set('--secondary-foreground', `${H} ${sc(0.6,40)}% 12%`);
-    set('--muted', `${H} ${sc(0.6,35)}% 93.5%`);      set('--muted-foreground', `${H} ${sc(0.3,20)}% 45%`);
-    set('--accent', `${H} ${sc(0.6,35)}% 91%`);       set('--accent-foreground', `${H} ${sc(0.6,40)}% 12%`);
-    set('--border', `${H} ${sc(0.5,30)}% 88%`);       set('--input', `${H} ${sc(0.5,30)}% 88%`);
-  }
-}
-
-/* =====================================================================
- * MODEL — flatten arbitrary JSON into related tables.
- * Every nested array-of-objects under key K (anywhere) accumulates into
- * one table K. Each child row remembers its ancestor chain so we can show
- * parent-name columns and pre-filter on the parent id when drilling in.
- * ===================================================================== */
-// Which keys, in order, mark a row's id / display name. First match found wins.
-// These are the defaults; they can be overridden from the config below the JSON input.
 const DEFAULT_ID_KEYS   = ["id"];
 const DEFAULT_NAME_KEYS = ["name"];
 const pick = (o,ks)=>{ for(const k of ks){ if(o[k]!=null && o[k]!=="") return o[k]; } return null; };
@@ -193,15 +179,18 @@ function buildTables(rootData, rootName, keys){
     const t=ensure(tableName);
     arr.forEach((item,idx)=>{
       if(item===null || typeof item!=="object" || Array.isArray(item)){
-        t.rows.push({__uid:seq++, __anc:ancestors.slice(), __id:idx, __name:String(item), __raw:item, cells:{value:item}, links:{}});
+        t.rows.push({__anc:ancestors.slice(), __id:idx, __name:String(item), cells:{value:item}, links:{}});
         return;
       }
       const id=getId(item,idx,idKeys), name=getName(item,idx,nameKeys,idKeys);
-      const row={__uid:seq++, __anc:ancestors.slice(), __id:id, __name:name, __raw:item, cells:{}, links:{}};
+      // the actual key that supplied the id (e.g. "id"), so a record can later be
+      // filtered to itself by its own id column; null when only the index fallback exists
+      const idKey=idKeys.find(k=>item[k]!=null && item[k]!=="") || null;
+      const row={__anc:ancestors.slice(), __id:id, __name:name, __idKey:idKey, cells:{}, links:{}};
       for(const [k,v] of Object.entries(item)){
         if(isObjArray(v)){
           row.links[k]=v.length;
-          walk(v.filter(x=>x && typeof x==="object" && !Array.isArray(x)), k, ancestors.concat([{table:tableName,id,name}]));
+          walk(v.filter(x=>x && typeof x==="object" && !Array.isArray(x)), k, ancestors.concat([{table:tableName,id,name,idKey}]));
         } else if(Array.isArray(v)) row.cells[k]=v.join(", ");
         else if(v && typeof v==="object") row.cells[k]=JSON.stringify(v);
         else row.cells[k]=v;
@@ -212,9 +201,8 @@ function buildTables(rootData, rootName, keys){
   const arr = Array.isArray(rootData) ? rootData
             : (rootData && typeof rootData==="object") ? [rootData] : [rootData];
   walk(arr, rootName, []);
-  return {tables, order};
+  return {tables, order, idKeys, nameKeys};
 }
-
 function computeColumns(table){
   const anc=[],sca=[],lnk=[], sa=new Set(),ss=new Set(),sl=new Set();
   for(const r of table.rows){
@@ -224,2674 +212,327 @@ function computeColumns(table){
   }
   return {anc, sca, lnk};
 }
-const ancGet = (table)=> (r)=>{ const a=r.__anc.find(x=>x.table===table); return a?a.name:null; };
+const ancGet   = (table)=> (r)=>{ const a=r.__anc.find(x=>x.table===table); return a?a.name:null; };
 const ancIdGet = (table)=> (r)=>{ const a=r.__anc.find(x=>x.table===table); return a?a.id:null; };
 
-function distinctOptions(rows, getVal){
-  const set=new Map();
-  rows.forEach(r=>{ const v=getVal(r); if(v==null||v==='') return; if(!set.has(v)) set.set(v,true); });
-  return [...set.keys()].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}))
-                        .map(v=>({label:String(v), value:v}));
-}
-// A value counts as a date only if it's a string that clearly looks like one —
-// bare numbers (e.g. a "founded" year) must NOT be misread as dates.
-function isDateString(v){
-  if(typeof v!=='string') return false;
-  const s=v.trim();
-  if(!s || /^[+-]?\d+(\.\d+)?$/.test(s)) return false;
-  // YYYY-MM-DD or YYYY/MM/DD, optional time / timezone
-  if(/^\d{4}[-/]\d{1,2}[-/]\d{1,2}([ T]\d{1,2}:\d{2}(:\d{2})?(\.\d+)?\s*(Z|[+-]\d{2}:?\d{2})?)?$/.test(s)) return true;
-  // month names etc. ("Jan 5, 2020", "5 January 2020 14:00")
-  if(/[A-Za-z]/.test(s) && /\d/.test(s) && !isNaN(Date.parse(s))) return true;
-  return false;
-}
-const hasTimePart = v => typeof v==='string' && /\d{1,2}:\d{2}/.test(v);
-
-// A text column with at most this many distinct values becomes a faceted
-// multiSelect (option list + faceted search); above it, plain text. Configurable.
-const DEFAULT_FACET_MAX = 32;
-// Max height (px) a table cell's content may take before it's clipped. Configurable.
-const DEFAULT_CELL_HEIGHT = 72;
-function detectVariant(rows, getVal, facetMax=DEFAULT_FACET_MAX){
-  const vals=rows.map(getVal).filter(v=>v!=null&&v!=='');
-  if(!vals.length) return 'text';
-  if(vals.every(v=>typeof v==='boolean')) return 'boolean';
-  if(vals.every(isDateString)) return 'date';
-  const allNum = vals.every(v=>typeof v==='number' || (typeof v==='string' && v.trim()!=='' && !isNaN(Number(v))));
-  if(allNum) return 'number';
-  const distinct=new Set(vals.map(String));
-  return distinct.size<=facetMax ? 'multiSelect' : 'text';
-}
-
 /* =====================================================================
- * icons (lucide paths)
- * ===================================================================== */
-const S = (p)=> ({className,...r})=> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cn('h-4 w-4 shrink-0', className)} {...r}>{p}</svg>;
-const Check=S(<path d="M20 6 9 17l-5-5"/>);
-const Minus=S(<path d="M5 12h14"/>);
-const ChevronDown=S(<path d="m6 9 6 6 6-6"/>);
-const ChevronsUpDown=S(<><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></>);
-const ChevronLeft=S(<path d="m15 18-6-6 6-6"/>);
-const ChevronRight=S(<path d="m9 18 6-6-6-6"/>);
-const ChevronsLeft=S(<><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></>);
-const ChevronsRight=S(<><path d="m6 17 5-5-5-5"/><path d="m13 17 5-5-5-5"/></>);
-const ArrowUp=S(<><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></>);
-const ArrowDown=S(<><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></>);
-const X=S(<><path d="M18 6 6 18"/><path d="m6 6 12 12"/></>);
-const Plus=S(<><path d="M5 12h14"/><path d="M12 5v14"/></>);
-const Settings2=S(<><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></>);
-const ListFilter=S(<><path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/></>);
-const ArrowUpDown=S(<><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></>);
-const EyeOff=S(<><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></>);
-const Trash2=S(<><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></>);
-const Search=S(<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>);
-const CornerDownRight=S(<><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></>);
-const Sun=S(<><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></>);
-const Moon=S(<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>);
-const Download=S(<><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></>);
-const Copy=S(<><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></>);
-const Ellipsis=S(<><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></>);
-const CalendarIcon=S(<><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></>);
-const FileSpreadsheet=S(<><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M14 13h2"/><path d="M8 17h2"/><path d="M14 17h2"/></>);
-const CirclePlus=S(<><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></>);
-
-
-// Official GitHub mark (Octicon), a filled path — not the lucide stroke version.
-const Github=({className,...r})=> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" className={cn('h-4 w-4 shrink-0', className)} {...r}><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A8.001 8.001 0 0 1 8 0Z"/></svg>;
-
-/* =====================================================================
- * primitives (shadcn New York)
- * ===================================================================== */
-const BTN={
-  base:'inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none',
-  variant:{
-    default:'bg-primary text-primary-foreground shadow hover:bg-primary/90',
-    destructive:'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-    outline:'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-    secondary:'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-    ghost:'hover:bg-accent hover:text-accent-foreground',
-    link:'text-primary underline-offset-4 hover:underline',
-  },
-  size:{ default:'h-9 px-4 py-2', sm:'h-8 rounded-md px-3 text-xs', xs:'h-7 rounded-md px-2 text-xs', icon:'h-9 w-9', iconSm:'h-8 w-8' },
-};
-const Button = React.forwardRef(({variant='default',size='default',className,...p},ref)=>
-  <button ref={ref} className={cn(BTN.base,BTN.variant[variant],BTN.size[size],className)} {...p}/>);
-const Input = ({className,...p})=>
-  <input className={cn('flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50', className)} {...p}/>;
-const NSelect = ({className,children,...p})=>
-  <select className={cn('flex h-8 items-center rounded-md border border-input bg-background px-2 py-1 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring', className)} {...p}>{children}</select>;
-const Badge = ({variant='default',className,...p})=>{
-  const v={default:'border-transparent bg-primary text-primary-foreground', secondary:'border-transparent bg-secondary text-secondary-foreground', outline:'text-foreground'}[variant];
-  return <span className={cn('inline-flex items-center rounded-md border px-1.5 py-0.5 text-xs font-medium', v, className)} {...p}/>;
-};
-const Sep = ({vertical,className})=> <div className={cn(vertical?'mx-1 h-4 w-px':'my-1 h-px w-full', 'bg-border', className)}/>;
-const Tick = ({on})=> <span className={cn('flex h-4 w-4 items-center justify-center rounded-sm border', on?'border-primary bg-primary text-primary-foreground':'border-primary/40')}>{on&&<Check className="h-3 w-3"/>}</span>;
-
-function Checkbox({checked, indeterminate, onChange, className}){
-  return <button type="button" role="checkbox" aria-checked={indeterminate?'mixed':!!checked} onClick={()=>onChange(!checked)}
-    className={cn('flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border shadow-sm', (checked||indeterminate)?'border-primary bg-primary text-primary-foreground':'border-primary/50', className)}>
-    {indeterminate? <Minus className="h-3 w-3"/> : checked? <Check className="h-3.5 w-3.5"/> : null}
-  </button>;
-}
-
-function Popover({trigger, children, align='start', contentClass, className}){
-  const [open,setOpen]=useState(false);
-  const ref=useRef(null);
-  useEffect(()=>{
-    if(!open) return;
-    const down=e=>{ if(ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    const key=e=>{ if(e.key==='Escape') setOpen(false); };
-    document.addEventListener('mousedown',down); document.addEventListener('keydown',key);
-    return ()=>{ document.removeEventListener('mousedown',down); document.removeEventListener('keydown',key); };
-  },[open]);
-  const trig=React.cloneElement(trigger,{ 'data-state':open?'open':'closed', onClick:(e)=>{ trigger.props.onClick&&trigger.props.onClick(e); setOpen(o=>!o); } });
-  return <span className={cn('relative inline-flex', className)} ref={ref}>
-    {trig}
-    {open && <div className={cn('absolute top-full z-50 mt-1.5 rounded-md border bg-popover text-popover-foreground shadow-md', align==='end'?'right-0':'left-0', contentClass)}>
-      {typeof children==='function'?children(()=>setOpen(false)):children}
-    </div>}
-  </span>;
-}
-const MenuItem = ({icon,label,onClick,active})=>
-  <button onClick={onClick} className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground">
-    {icon && React.cloneElement(icon,{className:'h-3.5 w-3.5 text-muted-foreground'})}
-    <span className="flex-1 text-left">{label}</span>
-    {active && <Check className="h-3.5 w-3.5"/>}
-  </button>;
-
-/* =====================================================================
- * advanced filter evaluation
- * ===================================================================== */
-// Operator sets + exact labels mirror tablecn's dataTableConfig (src/config/data-table.ts).
-const OPERATORS={
-  text:[['iLike','Contains'],['notILike','Does not contain'],['eq','Is'],['ne','Is not'],['isEmpty','Is empty'],['isNotEmpty','Is not empty']],
-  number:[['eq','Is'],['ne','Is not'],['lt','Is less than'],['lte','Is less than or equal to'],['gt','Is greater than'],['gte','Is greater than or equal to'],['isBetween','Is between'],['isEmpty','Is empty'],['isNotEmpty','Is not empty']],
-  date:[['eq','Is'],['ne','Is not'],['lt','Is before'],['gt','Is after'],['lte','Is on or before'],['gte','Is on or after'],['isBetween','Is between'],['isEmpty','Is empty'],['isNotEmpty','Is not empty']],
-  boolean:[['eq','Is'],['ne','Is not']],
-  select:[['eq','Is'],['ne','Is not'],['isEmpty','Is empty'],['isNotEmpty','Is not empty']],
-  multiSelect:[['inArray','Has any of'],['notInArray','Has none of'],['isEmpty','Is empty'],['isNotEmpty','Is not empty']],
-};
-const defaultOp = v => ({text:'iLike', number:'eq', date:'eq', boolean:'eq', select:'eq', multiSelect:'inArray'}[v] || 'iLike');
-
-function evalCond(orig, c, metaById){
-  const m=metaById[c.fieldId]; if(!m) return true;
-  const v=m.getValue(orig);
-  const empty = v==null || v==='';
-  if(c.operator==='isEmpty') return empty;
-  if(c.operator==='isNotEmpty') return !empty;
-  if(m.variant==='number'){
-    if(c.operator==='isBetween'){
-      const [a,b]=Array.isArray(c.value)?c.value:[];
-      const lo=(a===''||a==null||isNaN(Number(a)))?null:Number(a);
-      const hi=(b===''||b==null||isNaN(Number(b)))?null:Number(b);
-      if(lo==null&&hi==null) return true;
-      const x=Number(v);
-      if(lo!=null&&x<lo) return false;
-      if(hi!=null&&x>hi) return false;
-      return true;
-    }
-    if(c.value===''||c.value==null||isNaN(Number(c.value))) return true;
-    const a=Number(v), b=Number(c.value);
-    switch(c.operator){ case 'eq':return a===b; case 'ne':return a!==b; case 'lt':return a<b; case 'lte':return a<=b; case 'gt':return a>b; case 'gte':return a>=b; default:return true; }
-  }
-  if(m.variant==='date'){
-    if(c.operator==='isBetween'){
-      const [a,b]=Array.isArray(c.value)?c.value:[];
-      if(!a&&!b) return true;
-      const rt=Date.parse(v); if(isNaN(rt)) return false;
-      if(a){ const ds=Date.parse(a+'T00:00:00'); if(!isNaN(ds)&&rt<ds) return false; }
-      if(b){ const de=Date.parse(b+'T00:00:00')+86400000; if(!isNaN(de)&&rt>=de) return false; }
-      return true;
-    }
-    if(c.value===''||c.value==null) return true;
-    const rt=Date.parse(v); if(isNaN(rt)) return false;
-    // filter picker is day-granular; compare row timestamp against that calendar day's window
-    const ds=Date.parse(c.value+'T00:00:00'); if(isNaN(ds)) return true;
-    const de=ds+86400000;
-    switch(c.operator){
-      case 'eq':  return rt>=ds && rt<de;
-      case 'ne':  return !(rt>=ds && rt<de);
-      case 'lt':  return rt<ds;
-      case 'lte': return rt<de;
-      case 'gt':  return rt>=de;
-      case 'gte': return rt>=ds;
-      default: return true;
-    }
-  }
-  if(m.variant==='boolean'){
-    if(c.value===''||c.value==null) return true;
-    const bv=String(v)===String(c.value);
-    return c.operator==='ne'? !bv : bv;
-  }
-  if(m.variant==='multiSelect'){
-    const sel=Array.isArray(c.value)?c.value:(c.value?[c.value]:[]);
-    if(!sel.length) return true;
-    const sv=String(v);
-    const inSel=sel.map(String).includes(sv);
-    return c.operator==='notInArray' ? !inSel : inSel;
-  }
-  if(c.value===''||c.value==null) return true;
-  const sv=String(v==null?'':v).toLowerCase(), fv=String(c.value).toLowerCase();
-  switch(c.operator){ case 'iLike':return sv.includes(fv); case 'notILike':return !sv.includes(fv); case 'eq':return sv===fv; case 'ne':return sv!==fv; default:return true; }
-}
-function evalAdvanced(orig, adv, metaById){
-  if(!adv.conditions.length) return true;
-  const res=adv.conditions.map(c=>evalCond(orig,c,metaById));
-  return adv.joinOperator==='or' ? res.some(Boolean) : res.every(Boolean);
-}
-
-/* =====================================================================
- * column header with sort menu
- * ===================================================================== */
-function ColumnHeader({column, title}){
-  if(!column.getCanSort()) return <span className="text-xs font-medium text-muted-foreground">{title}</span>;
-  const sorted=column.getIsSorted();
-  return <Popover trigger={
-    <Button variant="ghost" size="sm" className="-ml-2 h-8 data-[state=open]:bg-accent">
-      <span>{title}</span>
-      {sorted==='desc'? <ArrowDown className="h-3.5 w-3.5"/> : sorted==='asc'? <ArrowUp className="h-3.5 w-3.5"/> : <ChevronsUpDown className="h-3.5 w-3.5 text-muted-foreground"/>}
-    </Button>} contentClass="w-40 p-1">
-    {(close)=> <>
-      <MenuItem icon={<ArrowUp/>} label="Asc"  active={sorted==='asc'}  onClick={()=>{column.toggleSorting(false); close();}}/>
-      <MenuItem icon={<ArrowDown/>} label="Desc" active={sorted==='desc'} onClick={()=>{column.toggleSorting(true); close();}}/>
-      {column.getCanHide() && <><Sep/><MenuItem icon={<EyeOff/>} label="Hide" onClick={()=>{column.toggleVisibility(false); close();}}/></>}
-    </>}
-  </Popover>;
-}
-
-/* =====================================================================
- * faceted filter (Airtable-style)
- * ===================================================================== */
-function FacetedFilter({column, title, options}){
-  const [q,setQ]=useState('');
-  const selected=new Set(column.getFilterValue()||[]);
-  const counts=column.getFacetedUniqueValues();
-  const shown=options.filter(o=>o.label.toLowerCase().includes(q.toLowerCase()));
-  return <Popover trigger={
-    <Button variant="outline" size="sm" className="h-8 border-dashed">
-      <CirclePlus className="h-3.5 w-3.5"/> {title}
-      {selected.size>0 && <><Sep vertical/>
-        <div className="hidden gap-1 lg:flex">
-          {selected.size>2
-            ? <Badge variant="secondary" className="rounded-sm px-1 font-normal">{selected.size} selected</Badge>
-            : options.filter(o=>selected.has(o.value)).map(o=><Badge key={String(o.value)} variant="secondary" className="rounded-sm px-1 font-normal">{o.label}</Badge>)}
-        </div>
-        <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">{selected.size}</Badge></>}
-    </Button>} contentClass="w-56 p-0">
-    {()=> <div>
-      <div className="flex items-center gap-2 border-b px-2">
-        <Search className="h-3.5 w-3.5 opacity-50"/>
-        <input value={q} onChange={e=>setQ(e.target.value)} placeholder={title} className="h-9 w-full bg-transparent text-sm outline-none"/>
-      </div>
-      <div className="max-h-64 overflow-auto p-1">
-        {shown.length===0 && <div className="py-6 text-center text-sm text-muted-foreground">No results.</div>}
-        {shown.map(o=>{ const on=selected.has(o.value);
-          return <button key={String(o.value)} onClick={()=>{ const ns=new Set(selected); on?ns.delete(o.value):ns.add(o.value); column.setFilterValue(ns.size?[...ns]:undefined); }}
-            className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground">
-            <Tick on={on}/>
-            <span className="flex-1 truncate text-left">{o.label}</span>
-            <span className="font-mono text-xs text-muted-foreground">{counts.get(o.value)||0}</span>
-          </button>; })}
-      </div>
-      {selected.size>0 && <><Sep/><button onClick={()=>column.setFilterValue(undefined)} className="w-full px-2 py-2 text-center text-sm hover:bg-accent">Clear filters</button></>}
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * numeric-range & date-range toolbar filters (columnFilter based)
- * ===================================================================== */
-const multiFilterFn = (row,cid,val)=> !val||!val.length|| val.some(x=>x===row.getValue(cid));
-const numberRangeFn = (row,cid,val)=>{ if(!val) return true; const v=Number(row.getValue(cid)); const [a,b]=val; if(a!=null&&a!==''&&v<Number(a)) return false; if(b!=null&&b!==''&&v>Number(b)) return false; return true; };
-const dateRangeFn = (row,cid,val)=>{ if(!val) return true; const t=Date.parse(row.getValue(cid)); if(isNaN(t)) return false; const [f,to]=val; if(f){ const fs=Date.parse(f+'T00:00:00'); if(!isNaN(fs)&&t<fs) return false; } if(to){ const te=Date.parse(to+'T00:00:00')+86400000; if(!isNaN(te)&&t>=te) return false; } return true; };
-// global search — matches the query against every column: scalar cells, ancestor
-// names/ids, and the row's own id/name.
-const globalRowFilter = (row, _cid, val)=>{
-  const q=String(val??'').trim().toLowerCase();
-  if(!q) return true;
-  const r=row.original, hay=[];
-  if(r.cells) for(const k in r.cells){ const v=r.cells[k]; if(v!=null&&v!=='') hay.push(String(v)); }
-  if(r.__anc) for(const a of r.__anc){ if(a.name!=null) hay.push(String(a.name)); if(a.id!=null) hay.push(String(a.id)); }
-  if(r.__name!=null) hay.push(String(r.__name));
-  if(r.__id!=null) hay.push(String(r.__id));
-  return hay.some(s=>s.toLowerCase().includes(q));
-};
-
-function RangeFilter({column, title}){
-  const val=column.getFilterValue()||[];
-  const active = (val[0]!=null&&val[0]!=='')||(val[1]!=null&&val[1]!=='');
-  const set=(a,b)=> column.setFilterValue(((a===''||a==null)&&(b===''||b==null))?undefined:[a,b]);
-  return <Popover contentClass="w-60 p-3" trigger={
-    <Button variant="outline" size="sm" className="h-8 border-dashed"><CirclePlus className="h-3.5 w-3.5"/> {title}
-      {active && <><Sep vertical/><Badge variant="secondary" className="rounded-sm px-1 font-normal">{val[0]!==''&&val[0]!=null?val[0]:'−∞'} – {val[1]!==''&&val[1]!=null?val[1]:'∞'}</Badge></>}
-    </Button>}>
-    {()=> <div className="space-y-2">
-      <div className="text-xs font-medium text-muted-foreground">{title}</div>
-      <div className="flex items-center gap-2">
-        <Input type="number" placeholder="min" value={val[0]??''} onChange={e=>set(e.target.value, val[1]??'')} className="h-8"/>
-        <span className="text-muted-foreground">–</span>
-        <Input type="number" placeholder="max" value={val[1]??''} onChange={e=>set(val[0]??'', e.target.value)} className="h-8"/>
-      </div>
-      {active && <button onClick={()=>column.setFilterValue(undefined)} className="w-full rounded-sm px-2 py-1.5 text-center text-sm hover:bg-accent">Clear</button>}
-    </div>}
-  </Popover>;
-}
-function DateRangeFilter({column, title}){
-  const val=column.getFilterValue()||[];
-  const active = (val[0]||val[1]);
-  const set=(a,b)=> column.setFilterValue((!a&&!b)?undefined:[a,b]);
-  return <Popover contentClass="w-64 p-3" trigger={
-    <Button variant="outline" size="sm" className="h-8 border-dashed"><CalendarIcon className="h-3.5 w-3.5"/> {title}
-      {active && <><Sep vertical/><Badge variant="secondary" className="rounded-sm px-1 font-normal">{val[0]||'…'} → {val[1]||'…'}</Badge></>}
-    </Button>}>
-    {()=> <div className="space-y-2">
-      <div className="text-xs font-medium text-muted-foreground">{title}</div>
-      <label className="flex items-center justify-between gap-2 text-sm text-muted-foreground">From<Input type="date" value={val[0]||''} onChange={e=>set(e.target.value, val[1]||'')} className="h-8 w-40"/></label>
-      <label className="flex items-center justify-between gap-2 text-sm text-muted-foreground">To<Input type="date" value={val[1]||''} onChange={e=>set(val[0]||'', e.target.value)} className="h-8 w-40"/></label>
-      {active && <button onClick={()=>column.setFilterValue(undefined)} className="w-full rounded-sm px-2 py-1.5 text-center text-sm hover:bg-accent">Clear</button>}
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * advanced filter list (Notion/Linear-style)
- * ===================================================================== */
-// Shared multi-select choice menu. A search box appears only once the option
-// list gets long (many unique values); short lists are just clickable choices.
-function ChoiceList({options, selected, onToggle, searchAfter=10}){
-  const [q,setQ]=useState('');
-  const showSearch = options.length>searchAfter;
-  const shown = q ? options.filter(o=>o.label.toLowerCase().includes(q.toLowerCase())) : options;
-  return <div className="w-56">
-    {showSearch &&
-      <div className="flex items-center gap-2 border-b px-2">
-        <Search className="h-3.5 w-3.5 opacity-50"/>
-        <input autoFocus value={q} onChange={e=>setQ(e.target.value)} placeholder="Search options..." className="h-9 w-full bg-transparent text-sm outline-none"/>
-      </div>}
-    <div className="max-h-64 overflow-auto p-1">
-      {shown.length===0 && <div className="py-6 text-center text-sm text-muted-foreground">{options.length? 'No matches.' : 'No options.'}</div>}
-      {shown.map(o=>{ const on=selected.has(o.value);
-        return <button key={String(o.value)} onClick={()=>onToggle(o.value)}
-          className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground">
-          <span className="flex-1 truncate text-left">{o.label}</span>
-          <Check className={cn('h-3.5 w-3.5', on?'opacity-100':'opacity-0')}/>
-        </button>; })}
-    </div>
-  </div>;
-}
-function ValueEditor({meta, cond, onChange}){
-  if(cond.operator==='isEmpty'||cond.operator==='isNotEmpty') return <div className="h-8 flex-1"/>;
-  if(cond.operator==='isBetween'){
-    const arr=Array.isArray(cond.value)?cond.value:['',''];
-    const type=meta.variant==='date'?'date':'number';
-    return <div className="flex flex-1 items-center gap-1.5">
-      <Input type={type} value={arr[0]??''} onChange={e=>onChange({...cond, value:[e.target.value, arr[1]??'']})} className="h-8 flex-1"/>
-      <span className="text-muted-foreground">–</span>
-      <Input type={type} value={arr[1]??''} onChange={e=>onChange({...cond, value:[arr[0]??'', e.target.value]})} className="h-8 flex-1"/>
-    </div>;
-  }
-  if(meta.variant==='boolean')
-    return <NSelect value={cond.value==null?'':String(cond.value)} onChange={e=>onChange({...cond, value:e.target.value})} className="h-8 flex-1"><option value="">—</option><option value="true">True</option><option value="false">False</option></NSelect>;
-  if(meta.variant==='number')
-    return <Input type="number" value={cond.value} onChange={e=>onChange({...cond, value:e.target.value})} className="h-8 flex-1" placeholder="value"/>;
-  if(meta.variant==='date')
-    return <Input type="date" value={cond.value||''} onChange={e=>onChange({...cond, value:e.target.value})} className="h-8 flex-1"/>;
-  if(meta.variant==='multiSelect'){
-    const sel=new Set(Array.isArray(cond.value)?cond.value:[]);
-    const vLabel=valueLabel(meta, cond);
-    return <Popover className="flex-1" contentClass="p-0" trigger={
-      <button className="flex h-8 w-full items-center justify-between gap-1 rounded-md border border-input bg-background px-2 text-sm shadow-sm hover:bg-accent data-[state=open]:bg-accent">
-        <span className="truncate">{vLabel || <span className="text-muted-foreground">Select…</span>}</span>
-        <ChevronDown className="h-4 w-4 shrink-0 opacity-50"/>
-      </button>}>
-      {()=> <ChoiceList options={meta.options||[]} selected={sel}
-        onToggle={val=>{ const ns=new Set(sel); ns.has(val)?ns.delete(val):ns.add(val); onChange({...cond, value:[...ns]}); }}/>}
-    </Popover>;
-  }
-  return <Input type="text" value={cond.value} onChange={e=>onChange({...cond, value:e.target.value})} className="h-8 flex-1" placeholder="value"/>;
-}
-function FilterRow({index, cond, metas, metaById, join, onJoin, onChange, onRemove}){
-  const meta=metaById[cond.fieldId]||metas[0];
-  const ops=OPERATORS[meta.variant]||OPERATORS.text;
-  return <div className="flex items-center gap-1.5">
-    {index===0
-      ? <span className="w-14 shrink-0 px-1 text-sm text-muted-foreground">Where</span>
-      : index===1
-        ? <NSelect value={join} onChange={e=>onJoin(e.target.value)} className="w-14 shrink-0"><option value="and">and</option><option value="or">or</option></NSelect>
-        : <span className="w-14 shrink-0 px-1 text-center text-sm text-muted-foreground">{join}</span>}
-    <NSelect value={cond.fieldId} onChange={e=>{ const nm=metaById[e.target.value]; onChange({...cond, fieldId:e.target.value, operator:defaultOp(nm.variant), value: nm.variant==='multiSelect'?[]:''}); }} className="w-28 shrink-0">
-      {metas.map(m=><option key={m.id} value={m.id}>{m.label}</option>)}
-    </NSelect>
-    <NSelect value={cond.operator} onChange={e=>onChange({...cond, operator:e.target.value})} className="w-32 shrink-0">
-      {ops.map(([v,l])=><option key={v} value={v}>{l}</option>)}
-    </NSelect>
-    <ValueEditor meta={meta} cond={cond} onChange={onChange}/>
-    <Button variant="ghost" size="iconSm" className="shrink-0 text-muted-foreground" onClick={onRemove}><Trash2 className="h-3.5 w-3.5"/></Button>
-  </div>;
-}
-function FilterList({metas, metaById, value, onChange}){
-  const add=()=>{ const m=metas[0]; onChange({...value, conditions:[...value.conditions, {id:uid(), fieldId:m.id, operator:defaultOp(m.variant), value: m.variant==='multiSelect'?[]:''}]}); };
-  return <Popover trigger={
-    <Button variant="outline" size="sm" className="h-8">
-      <ListFilter className="h-3.5 w-3.5"/> Filter
-      {value.conditions.length>0 && <Badge variant="secondary" className="ml-0.5 rounded-sm px-1 font-normal">{value.conditions.length}</Badge>}
-    </Button>} contentClass="w-[30rem] p-3">
-    {()=> <div className="space-y-2">
-      <div>
-        <div className="text-sm font-medium">{value.conditions.length? 'Filters' : 'No filters applied'}</div>
-        <p className="text-xs text-muted-foreground">{value.conditions.length? 'Modify filters to refine your rows.' : 'Add filters to refine your rows.'}</p>
-      </div>
-      <div className="space-y-1.5">
-        {value.conditions.map((c,i)=>
-          <FilterRow key={c.id} index={i} cond={c} metas={metas} metaById={metaById}
-            join={value.joinOperator} onJoin={j=>onChange({...value, joinOperator:j})}
-            onChange={nc=>onChange({...value, conditions:value.conditions.map(x=>x.id===c.id?nc:x)})}
-            onRemove={()=>onChange({...value, conditions:value.conditions.filter(x=>x.id!==c.id)})}/>)}
-      </div>
-      <div className="flex items-center gap-2 pt-1">
-        <Button size="sm" variant="outline" onClick={add}><Plus className="h-3.5 w-3.5"/> Add filter</Button>
-        {value.conditions.length>0 && <Button size="sm" variant="outline" onClick={()=>onChange({joinOperator:'and', conditions:[]})}>Reset filters</Button>}
-      </div>
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * advanced-filter value label helper
- * ===================================================================== */
-function valueLabel(meta, cond){
-  if(cond.operator==='isEmpty') return 'empty';
-  if(cond.operator==='isNotEmpty') return 'not empty';
-  if(cond.operator==='isBetween'){
-    const arr=Array.isArray(cond.value)?cond.value:[];
-    const a=arr[0]??'', b=arr[1]??'';
-    return (a===''&&b==='') ? '' : `${a||'…'} – ${b||'…'}`;
-  }
-  if(meta.variant==='multiSelect'){
-    const arr=Array.isArray(cond.value)?cond.value:[];
-    if(!arr.length) return '';
-    const labels=arr.map(v=>{ const o=(meta.options||[]).find(x=>x.value===v); return o?o.label:String(v); });
-    return labels.length>2 ? labels.length+' selected' : labels.join(', ');
-  }
-  return (cond.value===''||cond.value==null) ? '' : String(cond.value);
-}
-// tablecn feature-flags toggle: a single-select outline ToggleGroup with joined items.
-function Segmented({value, onChange, options}){
-  return <div className="inline-flex w-fit items-center">
-    {options.map((o,i)=>{ const on=value===o.value; const first=i===0, last=i===options.length-1;
-      return <button key={o.value} onClick={()=>onChange(on?null:o.value)} title={o.title}
-        className={cn('inline-flex h-8 items-center gap-1.5 whitespace-nowrap border px-3 text-xs font-medium transition-colors',
-          first?'rounded-l-md':'rounded-l-none', last?'rounded-r-md':'rounded-r-none', !first&&'border-l-0',
-          on?'bg-accent/70 text-accent-foreground hover:bg-accent/90':'bg-background text-muted-foreground hover:bg-muted hover:text-foreground')}>
-        {o.icon}{o.label}
-      </button>; })}
-  </div>;
-}
-
-/* =====================================================================
- * sort list (multi-sort)
- * ===================================================================== */
-function SortList({fields, sorting, setSorting}){
-  const used=new Set(sorting.map(s=>s.id));
-  const firstFree=fields.find(f=>!used.has(f.id));
-  const add=()=>{ if(firstFree) setSorting([...sorting, {id:firstFree.id, desc:false}]); };
-  return <Popover trigger={
-    <Button variant="outline" size="sm" className="h-8">
-      <ArrowUpDown className="h-3.5 w-3.5"/> Sort
-      {sorting.length>0 && <Badge variant="secondary" className="ml-0.5 rounded-sm px-1 font-normal">{sorting.length}</Badge>}
-    </Button>} contentClass="w-80 p-3">
-    {()=> <div className="space-y-2">
-      <div className="text-sm font-medium">{sorting.length? 'Sort by' : 'No sorting applied'}</div>
-      <div className="space-y-1.5">
-        {sorting.map((s,i)=>
-          <div key={s.id+i} className="flex items-center gap-1.5">
-            <NSelect value={s.id} onChange={e=>setSorting(sorting.map((x,j)=>j===i?{...x,id:e.target.value}:x))} className="flex-1">
-              {fields.filter(f=>f.id===s.id || !used.has(f.id)).map(f=><option key={f.id} value={f.id}>{f.label}</option>)}
-            </NSelect>
-            <NSelect value={s.desc?'desc':'asc'} onChange={e=>setSorting(sorting.map((x,j)=>j===i?{...x,desc:e.target.value==='desc'}:x))} className="w-24">
-              <option value="asc">Asc</option><option value="desc">Desc</option>
-            </NSelect>
-            <Button variant="ghost" size="iconSm" className="text-muted-foreground" onClick={()=>setSorting(sorting.filter((_,j)=>j!==i))}><Trash2 className="h-3.5 w-3.5"/></Button>
-          </div>)}
-      </div>
-      <div className="flex items-center gap-2 pt-1">
-        {firstFree && <Button size="sm" variant="outline" onClick={add}><Plus className="h-3.5 w-3.5"/> Add sort</Button>}
-        {sorting.length>0 && <Button size="sm" variant="outline" onClick={()=>setSorting([])}>Reset sorting</Button>}
-      </div>
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * view (column visibility)
- * ===================================================================== */
-function ViewOptions({table}){
-  return <Popover align="end" trigger={<Button variant="outline" size="sm" className="h-8"><Settings2 className="h-3.5 w-3.5"/> View</Button>} contentClass="w-48 p-1">
-    {()=> <div className="max-h-72 overflow-auto">
-      <div className="px-2 py-1.5 text-xs font-medium text-muted-foreground">Toggle columns</div>
-      <Sep/>
-      {table.getAllColumns().filter(c=>c.getCanHide()).map(c=>
-        <button key={c.id} onClick={()=>c.toggleVisibility(!c.getIsVisible())} className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground">
-          <Tick on={c.getIsVisible()}/>
-          <span className="truncate">{(c.columnDef.meta&&c.columnDef.meta.label)||c.id}</span>
-        </button>)}
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * per-row actions (ellipsis dropdown)
- * ===================================================================== */
-function RowActions({row, mt, onDrill}){
-  const linkKeys=Object.keys(row.links).filter(k=>row.links[k]>0);
-  const copy=()=>{ try{ navigator.clipboard.writeText(JSON.stringify(row.__raw,null,2)); }catch(e){} };
-  const download=()=>{ const b=new Blob([JSON.stringify(row.__raw,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=(String(row.__name||'row')).replace(/[^\w.-]+/g,'_')+'.json'; a.click(); URL.revokeObjectURL(a.href); };
-  return <div className="flex justify-end">
-    <Popover align="end" contentClass="w-48 p-1" trigger={
-      <Button variant="ghost" size="iconSm" className="h-8 w-8 text-muted-foreground data-[state=open]:bg-accent"><Ellipsis className="h-4 w-4"/></Button>}>
-      {(close)=> <>
-        {linkKeys.map(k=><MenuItem key={k} icon={<CornerDownRight/>} label={`Open ${k} (${row.links[k]})`} onClick={()=>{ onDrill(k, mt.name, row.__id, row.__name); close(); }}/>)}
-        {linkKeys.length>0 && <Sep/>}
-        <MenuItem icon={<Copy/>} label="Copy JSON" onClick={()=>{ copy(); close(); }}/>
-        <MenuItem icon={<Download/>} label="Download JSON" onClick={()=>{ download(); close(); }}/>
-      </>}
-    </Popover>
-  </div>;
-}
-
-/* =====================================================================
- * columns builder
- * ===================================================================== */
-function buildColumnModel(mt, onDrill, facetMax=DEFAULT_FACET_MAX, onParent){
-  const {anc, sca, lnk}=computeColumns(mt);
-  const columns=[]; const metas=[]; const sortFields=[]; const facetCols=[]; const rangeCols=[]; const dateCols=[]; const hiddenIds={};
-  let primaryText=null;
-
-  columns.push({
-    id:'select', enableSorting:false, enableHiding:false, size:28,
-    header:({table})=> <Checkbox checked={table.getIsAllPageRowsSelected()} indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()} onChange={v=>table.toggleAllPageRowsSelected(v)}/>,
-    cell:({row})=> <Checkbox checked={row.getIsSelected()} onChange={v=>row.toggleSelected(v)}/>,
-  });
-
-  // hidden column keyed on the row's own id — lets us filter a table to a single
-  // row (used when clicking a parent name to view just that parent).
-  columns.push({
-    id:'__self_id', accessorFn:(r)=>r.__id, enableHiding:false, enableSorting:false,
-    filterFn:(row,id,val)=> String(row.getValue(id))===String(val),
-  });
-  hiddenIds['__self_id']=false;
-
-  anc.forEach(t=>{
-    const nameId='anc_name__'+t, idId='anc_id__'+t;
-    const getName=ancGet(t), getIdV=ancIdGet(t);
-    const options=distinctOptions(mt.rows, getName);
-    columns.push({
-      id:nameId, accessorFn:getName, meta:{label:t, variant:'multiSelect', options, getValue:getName},
-      header:({column})=> <ColumnHeader column={column} title={t}/>,
-      cell:({row, getValue})=>{ const v=getValue(); if(!v) return <span className="text-muted-foreground">—</span>;
-        const pid=getIdV(row.original);
-        return onParent
-          ? <button className="font-medium text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary" title={`View ${t} “${v}”`} onClick={()=>onParent(t, pid, String(v))}>{v}</button>
-          : <span className="font-medium">{v}</span>; },
-      filterFn:(row,id,val)=> !val||!val.length|| val.some(x=>x===row.getValue(id)),
-    });
-    metas.push({id:nameId, label:t, variant:'multiSelect', options, getValue:getName});
-    sortFields.push({id:nameId, label:t});
-    facetCols.push({id:nameId, label:t, options});
-    // hidden id column, used only for the drill (parent) filter
-    columns.push({
-      id:idId, accessorFn:getIdV, enableHiding:true, meta:{label:t+' id', variant:'text', getValue:getIdV},
-      header:({column})=> <ColumnHeader column={column} title={t+' id'}/>,
-      cell:({getValue})=> <span className="font-mono text-xs text-muted-foreground">{String(getValue()??'')}</span>,
-      filterFn:(row,id,val)=> String(row.getValue(id))===String(val),
-    });
-    hiddenIds[idId]=false;
-  });
-
-  sca.forEach(k=>{
-    const id='sca__'+k;
-    const getV=(r)=>r.cells[k];
-    const variant=detectVariant(mt.rows, getV, facetMax);
-    const options = (variant==='multiSelect') ? distinctOptions(mt.rows, getV) : undefined;
-    const dateHasTime = variant==='date' && mt.rows.some(r=>hasTimePart(getV(r)));
-    const isPrimary = variant==='text' && !primaryText;
-    if(isPrimary) primaryText={id, label:k};
-    columns.push({
-      id, accessorFn:getV, meta:{label:k, variant, options, getValue:getV},
-      header:({column})=> <ColumnHeader column={column} title={k}/>,
-      cell:({row, getValue})=>{ const v=getValue();
-        if(v==null||v==='') return <span className="text-muted-foreground">—</span>;
-        // the cell that holds this row's name key opens the detail modal
-        if(onParent && String(v)===String(row.original.__name))
-          return <button type="button" onClick={()=>onParent(mt.name, row.original.__id, row.original.__name)}
-            className="block max-w-[520px] break-words text-left font-medium text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">{String(v)}</button>;
-        if(variant==='date'){ const d=new Date(v); if(isNaN(d)) return <span>{String(v)}</span>;
-          const txt=d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) + (dateHasTime? ', '+d.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'}):'' );
-          return <span className="flex items-center gap-1.5 whitespace-nowrap text-muted-foreground"><CalendarIcon className="h-3.5 w-3.5"/>{txt}</span>; }
-        if(variant==='multiSelect') return <span className="block max-w-[520px] break-words">{String(v)}</span>;
-        if(typeof v==='number') return <span className="font-mono tabular-nums">{v}</span>;
-        if(typeof v==='boolean') return <Badge variant="secondary" className="rounded-sm font-normal">{String(v)}</Badge>;
-        return <span className="block max-w-[520px] break-words">{String(v)}</span>;
-      },
-      filterFn: variant==='multiSelect' ? multiFilterFn : variant==='number' ? numberRangeFn : variant==='date' ? dateRangeFn : 'includesString',
-      enableColumnFilter:true,
-    });
-    metas.push({id, label:k, variant, options, getValue:getV});
-    sortFields.push({id, label:k});
-    if(variant==='multiSelect') facetCols.push({id, label:k, options});
-    else if(variant==='number') rangeCols.push({id, label:k});
-    else if(variant==='date') dateCols.push({id, label:k});
-  });
-
-  lnk.forEach(k=>{
-    const id='lnk__'+k;
-    columns.push({
-      id, accessorFn:(r)=>r.links[k]||0, enableColumnFilter:false, meta:{label:k},
-      header:({column})=> <ColumnHeader column={column} title={k}/>,
-      cell:({row})=>{ const n=row.original.links[k]||0;
-        if(!n) return <span className="text-muted-foreground/60">—</span>;
-        return <Button variant="outline" size="xs" className="h-7 gap-1.5" onClick={()=>onDrill(k, mt.name, row.original.__id, row.original.__name)}>
-          <CornerDownRight className="h-3 w-3"/> View <Badge className="h-4 rounded-sm px-1 text-[10px] leading-none">{n}</Badge>
-        </Button>; },
-    });
-    sortFields.push({id, label:k});
-  });
-
-  columns.push({
-    id:'actions', enableSorting:false, enableHiding:false, size:44,
-    header:()=> null,
-    cell:({row})=> <RowActions row={row.original} mt={mt} onDrill={onDrill}/>,
-  });
-
-  const metaById={}; metas.forEach(m=>metaById[m.id]=m);
-  // cap inline quick-filters shown in the toolbar to keep it tidy
-  return {columns, metas, metaById, sortFields,
-    facetCols:facetCols.slice(0,3), rangeCols:rangeCols.slice(0,2), dateCols:dateCols.slice(0,2),
-    primaryText, hiddenIds};
-}
-
-/* =====================================================================
- * row detail modal — full parent tree + every field as a key/value table
- * ===================================================================== */
-function DetailModal({detail, getRow, onClose, onNavigate}){
-  useEffect(()=>{
-    const key=e=>{ if(e.key==='Escape') onClose(); };
-    document.addEventListener('keydown',key);
-    return ()=>document.removeEventListener('keydown',key);
-  },[]);
-  if(!detail) return null;
-  const fmt=(v)=>{
-    if(v==null||v==='') return <span className="text-muted-foreground">—</span>;
-    if(Array.isArray(v)){
-      if(v.some(x=>x&&typeof x==='object'&&!Array.isArray(x))) return <Badge variant="secondary" className="rounded-sm font-normal">{v.length} item{v.length===1?'':'s'}</Badge>;
-      return <span className="break-words">{v.join(', ')}</span>;
-    }
-    if(typeof v==='object') return <pre className="whitespace-pre-wrap break-words font-mono text-xs">{JSON.stringify(v,null,2)}</pre>;
-    if(typeof v==='boolean') return <Badge variant="secondary" className="rounded-sm font-normal">{String(v)}</Badge>;
-    return <span className="break-words">{String(v)}</span>;
-  };
-  // Build the chain childmost → up the tree: the clicked entry first, then each
-  // ancestor (immediate parent … root), each resolved to its full row of values.
-  const chain=[{table:detail.table, row:detail.row}];
-  const anc=detail.row.__anc||[];
-  for(let i=anc.length-1;i>=0;i--){ const a=anc[i]; chain.push({table:a.table, row:getRow?getRow(a.table,a.id):null, fallback:a}); }
-  const levelLabel=(i)=> i===0?'this entry' : i===1?'parent' : i===2?'grandparent' : (i+' levels up');
-  return <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-    <div className="absolute inset-0 bg-black/50" onClick={onClose}/>
-    <div className="relative z-10 flex max-h-[85vh] w-full max-w-2xl flex-col rounded-lg border bg-card text-card-foreground shadow-lg">
-      <div className="flex items-start justify-between gap-2 border-b px-4 py-3">
-        <div className="min-w-0">
-          <div className="truncate text-sm font-semibold">{String(detail.row.__name||'Entry')}</div>
-          <div className="text-xs text-muted-foreground">{detail.table?detail.table+' · ':''}{chain.length>1?chain.length+' entries in tree':'1 entry'}</div>
-        </div>
-        <div className="flex shrink-0 items-center gap-1">
-          <Button variant="ghost" size="iconSm" title="Copy JSON" onClick={()=>{ try{navigator.clipboard.writeText(JSON.stringify(detail.row.__raw,null,2));}catch(e){} }}><Copy className="h-4 w-4"/></Button>
-          <Button variant="ghost" size="iconSm" title="Close" onClick={onClose}><X className="h-4 w-4"/></Button>
-        </div>
-      </div>
-      <div className="min-h-0 flex-1 overflow-auto">
-        {chain.map((e,idx)=>{
-          const r=e.row, raw=r?r.__raw:null;
-          const entries = (raw && typeof raw==='object' && !Array.isArray(raw)) ? Object.entries(raw) : (r?[['value', raw]]:[]);
-          const name=r?String(r.__name):String(e.fallback&&e.fallback.name!=null?e.fallback.name:'');
-          const id=r?String(r.__id):String(e.fallback&&e.fallback.id!=null?e.fallback.id:'');
-          return <div key={idx} className="border-b last:border-0">
-            <div className="sticky top-0 z-10 flex items-center gap-2 border-b bg-muted/60 px-4 py-2 backdrop-blur">
-              <Badge variant="secondary" className="rounded-sm font-normal">{e.table}</Badge>
-              {onNavigate && id!==''
-                ? <button type="button" title={`Go to the ${e.table} table`}
-                    onClick={()=>{ onNavigate(e.table, r?r.__id:e.fallback.id, name); onClose(); }}
-                    className="truncate text-left text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">{name}</button>
-                : <span className="truncate text-sm font-semibold">{name}</span>}
-              {id!=='' && <span className="font-mono text-[10px] text-muted-foreground">#{id}</span>}
-              <Badge variant={idx===0?'default':'outline'} className="ml-auto shrink-0 rounded-sm text-[10px] font-normal">{levelLabel(idx)}</Badge>
-            </div>
-            {entries.length>0
-              ? <table className="w-full text-sm"><tbody>
-                  {entries.map(([k,v])=> <tr key={k} className="border-b align-top last:border-0">
-                    <td className="w-44 px-4 py-2 font-medium text-muted-foreground">{k}</td>
-                    <td className="px-4 py-2">{fmt(v)}</td>
-                  </tr>)}
-                </tbody></table>
-              : <div className="px-4 py-3 text-sm text-muted-foreground">Details unavailable.</div>}
-          </div>;
-        })}
-      </div>
-    </div>
-  </div>;
-}
-
-/* =====================================================================
- * DataTable
- * ===================================================================== */
-function DataTable({mt, frame, onDrill, onParent, getRow, filterMode, setFilterMode, facetMax, maxCellHeight}){
-  // clicking a parent/grandparent name opens its detail modal (falls back to
-  // navigation if the row can't be found). Routed through a ref so the memoized
-  // column model always calls the latest handler.
-  const openEntryRef=useRef();
-  const model=useMemo(()=>buildColumnModel(mt, onDrill, facetMax, (t,id,name)=>openEntryRef.current&&openEntryRef.current(t,id,name)), [mt, facetMax]);
-  const [sorting,setSorting]=useState([]);
-  const [columnFilters,setColumnFilters]=useState(
-    frame.filters.map(f=>({id: f.self ? '__self_id' : 'anc_id__'+f.ancestorTable, value:f.id})));
-  const [columnVisibility,setColumnVisibility]=useState(model.hiddenIds);
-  const [rowSelection,setRowSelection]=useState({});
-  const [pagination,setPagination]=useState(()=>{
-    let ps=30; try{ const n=parseInt(localStorage.getItem('jtd-pageSize'),10); if(n>0) ps=n; }catch(e){}
-    return {pageIndex:0, pageSize:ps};
-  });
-  useEffect(()=>{ try{ localStorage.setItem('jtd-pageSize', String(pagination.pageSize)); }catch(e){} },[pagination.pageSize]);
-  const [advanced,setAdvanced]=useState({joinOperator:'and', conditions:[]});
-  const [globalFilter,setGlobalFilter]=useState('');
-  const [detail,setDetail]=useState(null); // {row, table}
-  openEntryRef.current=(table,id,name)=>{ const r=getRow&&getRow(table,id); if(r) setDetail({row:r, table}); else if(onParent) onParent(table,id,name); };
-
-  const data=useMemo(()=> mt.rows.filter(r=>evalAdvanced(r, advanced, model.metaById)), [mt, advanced, model]);
-
-  const table=useReactTable({
-    data, columns:model.columns,
-    state:{sorting, columnFilters, columnVisibility, rowSelection, pagination, globalFilter},
-    getRowId:(r)=>String(r.__uid),
-    globalFilterFn: globalRowFilter, getColumnCanGlobalFilter: ()=>true,
-    onSortingChange:setSorting, onColumnFiltersChange:setColumnFilters,
-    onColumnVisibilityChange:setColumnVisibility, onRowSelectionChange:setRowSelection,
-    onPaginationChange:setPagination, onGlobalFilterChange:setGlobalFilter,
-    getCoreRowModel:getCoreRowModel(), getFilteredRowModel:getFilteredRowModel(),
-    getSortedRowModel:getSortedRowModel(), getPaginationRowModel:getPaginationRowModel(),
-    getFacetedRowModel:getFacetedRowModel(), getFacetedUniqueValues:getFacetedUniqueValues(),
-  });
-
-  const parentChips = columnFilters
-    .filter(f=>f.id==='__self_id' || f.id.startsWith('anc_id__'))
-    .map(f=>{
-      if(f.id==='__self_id'){ const fr=frame.filters.find(x=>x.self); return {id:f.id, table:mt.name, value:f.value, name:fr?fr.name:String(f.value)}; }
-      const t=f.id.slice('anc_id__'.length); const fr=frame.filters.find(x=>x.ancestorTable===t); return {id:f.id, table:t, value:f.value, name:fr?fr.name:String(f.value)}; });
-
-  const quickFiltered = columnFilters.length>0 || advanced.conditions.length>0 || !!globalFilter;
-  const selectedCount=Object.keys(rowSelection).length;
-
-  const clearAll=()=>{ setColumnFilters([]); setAdvanced({joinOperator:'and', conditions:[]}); setGlobalFilter(''); };
-
-  const exportSelected=()=>{
-    const rows=table.getSelectedRowModel().rows.map(r=>r.original.__raw);
-    const blob=new Blob([JSON.stringify(rows,null,2)],{type:'application/json'});
-    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=mt.name+'-selected.json'; a.click(); URL.revokeObjectURL(a.href);
-  };
-
-  const cols=table.getVisibleLeafColumns();
-
-  return <div className="flex min-h-0 flex-1 flex-col gap-3">
-    {/* advanced-filter toggle — its own row above the toolbar (tablecn) */}
-    <div className="w-fit overflow-x-auto p-0.5">
-      <Segmented value={filterMode} onChange={setFilterMode} options={[
-        {value:'advanced', label:'Advanced filters', icon:<FileSpreadsheet className="h-3.5 w-3.5"/>, title:'Airtable like advanced filters for filtering rows.'},
-      ]}/>
-    </div>
-
-    {/* toolbar — contents depend on whether advanced filtering is on */}
-    <div className="flex w-full items-start justify-between gap-2">
-      <div className="flex flex-1 flex-wrap items-center gap-2">
-        {filterMode
-          ? <>
-              <SortList fields={model.sortFields} sorting={sorting} setSorting={setSorting}/>
-              <FilterList metas={model.metas} metaById={model.metaById} value={advanced} onChange={setAdvanced}/>
-            </>
-          : <>
-              <Input placeholder="Search all columns…"
-                value={globalFilter}
-                onChange={e=>setGlobalFilter(e.target.value)}
-                className="h-8 w-40 lg:w-56"/>
-              {model.facetCols.map(fc=>{ const col=table.getColumn(fc.id); return col? <FacetedFilter key={fc.id} column={col} title={fc.label} options={fc.options}/> : null; })}
-              {model.rangeCols.map(rc=>{ const col=table.getColumn(rc.id); return col? <RangeFilter key={rc.id} column={col} title={rc.label}/> : null; })}
-              {model.dateCols.map(dc=>{ const col=table.getColumn(dc.id); return col? <DateRangeFilter key={dc.id} column={col} title={dc.label}/> : null; })}
-              {quickFiltered && <Button variant="ghost" size="sm" className="h-8" onClick={clearAll}><X className="h-3.5 w-3.5"/> Reset</Button>}
-            </>}
-      </div>
-      <div className="flex items-center gap-2">
-        {!filterMode && <SortList fields={model.sortFields} sorting={sorting} setSorting={setSorting}/>}
-        <ViewOptions table={table}/>
-      </div>
-    </div>
-
-    {/* pre-applied parent filter chips */}
-    {parentChips.length>0 &&
-      <div className="flex flex-wrap items-center gap-2">
-        {parentChips.map(c=>
-          <Badge key={c.id} variant="secondary" className="gap-1.5 rounded-md py-1 pl-2.5 pr-1 text-xs font-normal">
-            <span className="text-muted-foreground">{c.table}.id =</span> <b className="font-semibold">{String(c.value)}</b>
-            <span className="text-muted-foreground">({c.name})</span>
-            <button className="rounded-sm p-0.5 hover:text-destructive" title="Show all (remove filter)" onClick={()=>setColumnFilters(prev=>prev.filter(x=>x.id!==c.id))}><X className="h-3 w-3"/></button>
-          </Badge>)}
-        <span className="text-xs text-muted-foreground">Pre-filtered to this parent — clear to see all entries grouped.</span>
-      </div>}
-
-    {/* table */}
-    <div className="min-h-0 flex-1 overflow-auto rounded-md border">
-      <table className="w-full caption-bottom text-sm">
-        <thead className="sticky top-0 z-10 bg-background [&_tr]:border-b">
-          {table.getHeaderGroups().map(hg=>
-            <tr key={hg.id} className="border-b">
-              {hg.headers.map(h=>
-                <th key={h.id} className="h-10 px-3 text-left align-middle font-medium text-muted-foreground whitespace-nowrap">
-                  {h.isPlaceholder?null:flexRender(h.column.columnDef.header, h.getContext())}
-                </th>)}
-            </tr>)}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.length===0 &&
-            <tr><td colSpan={cols.length} className="h-32 text-center text-muted-foreground">No results.</td></tr>}
-          {table.getRowModel().rows.map(row=>
-            <tr key={row.id} data-state={row.getIsSelected()?'selected':undefined}
-              className="border-b transition-colors even:bg-muted/30 hover:bg-muted/60 data-[state=selected]:bg-muted">
-              {row.getVisibleCells().map(cell=>
-                <td key={cell.id} className="px-3 py-2 align-top">
-                  <div className="overflow-auto" style={maxCellHeight?{maxHeight:maxCellHeight}:undefined}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</div>
-                </td>)}
-            </tr>)}
-        </tbody>
-      </table>
-    </div>
-
-    {/* pagination */}
-    <div className="flex flex-wrap items-center justify-between gap-3 px-1 text-sm">
-      <div className="text-muted-foreground">
-        {selectedCount} of {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-muted-foreground">Rows per page</span>
-          <NSelect value={pagination.pageSize} onChange={e=>table.setPageSize(Number(e.target.value))} className="w-16">
-            {[10,20,30,40,50].map(n=><option key={n} value={n}>{n}</option>)}
-          </NSelect>
-        </div>
-        <div className="text-muted-foreground">Page {table.getState().pagination.pageIndex+1} of {table.getPageCount()||1}</div>
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="iconSm" onClick={()=>table.setPageIndex(0)} disabled={!table.getCanPreviousPage()}><ChevronsLeft className="h-4 w-4"/></Button>
-          <Button variant="outline" size="iconSm" onClick={()=>table.previousPage()} disabled={!table.getCanPreviousPage()}><ChevronLeft className="h-4 w-4"/></Button>
-          <Button variant="outline" size="iconSm" onClick={()=>table.nextPage()} disabled={!table.getCanNextPage()}><ChevronRight className="h-4 w-4"/></Button>
-          <Button variant="outline" size="iconSm" onClick={()=>table.setPageIndex(table.getPageCount()-1)} disabled={!table.getCanNextPage()}><ChevronsRight className="h-4 w-4"/></Button>
-        </div>
-      </div>
-    </div>
-
-    {/* selection action bar */}
-    {selectedCount>0 &&
-      <div className="pointer-events-none fixed inset-x-0 bottom-6 z-40 flex justify-center">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-lg border bg-card px-3 py-2 shadow-lg">
-          <Badge variant="secondary" className="rounded-md">{selectedCount} selected</Badge>
-          <Sep vertical/>
-          <Button variant="outline" size="sm" className="h-8" onClick={exportSelected}><Download className="h-3.5 w-3.5"/> Export</Button>
-          <Button variant="ghost" size="sm" className="h-8" onClick={()=>table.resetRowSelection()}><X className="h-3.5 w-3.5"/> Clear</Button>
-        </div>
-      </div>}
-
-    {/* row detail modal */}
-    <DetailModal detail={detail} getRow={getRow} onClose={()=>setDetail(null)} onNavigate={onParent}/>
-  </div>;
-}
-
-/* =====================================================================
- * theme color picker — full Tailwind palette grid
- * ===================================================================== */
-function ColorPicker({value, onChange}){
-  return <Popover align="end" contentClass="w-64 p-3" trigger={
-    <Button variant="outline" size="iconSm" title="Theme color">
-      <span className="h-4 w-4 rounded-full border border-black/10" style={{background: value&&TW_COLORS[value]?TW_COLORS[value][5]:'hsl(var(--primary))'}}/>
-    </Button>}>
-    {(close)=> <div className="space-y-2">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-medium text-muted-foreground">Theme color</span>
-        <button className="text-xs text-primary hover:underline" onClick={()=>{ onChange(null); close(); }}>Reset to default</button>
-      </div>
-      <div className="grid max-h-80 grid-cols-2 gap-1 overflow-auto pr-1">
-        {Object.keys(TW_COLORS).map(name=>{ const on=value===name;
-          return <button key={name} type="button" onClick={()=>{ onChange(name); close(); }}
-            className={cn('flex items-center gap-2 rounded-md border px-2 py-1.5 text-sm capitalize hover:bg-accent hover:text-accent-foreground', on?'border-primary bg-accent':'border-transparent')}>
-            <span className="h-4 w-4 shrink-0 rounded-full border border-black/10" style={{background:TW_COLORS[name][5]}}/>
-            <span className="flex-1 truncate text-left">{name}</span>
-            {on && <Check className="h-3.5 w-3.5 shrink-0"/>}
-          </button>; })}
-      </div>
-    </div>}
-  </Popover>;
-}
-
-/* =====================================================================
- * App shell — input, tabs, breadcrumbs, drill navigation
+ * DataTables rendering
  * ===================================================================== */
 const ROOTNAME='root';
-const newFrame=(table,filters,title)=>({table, filters:filters||[], title:title||table});
+let MODEL=null, currentTable=null, dt=null, parseTimer=null;
 
-const SAMPLE=[
-  {
-    "id": 1,
-    "name": "Breaking Bad",
-    "network": "AMC",
-    "premiered": 2008,
-    "genre": "Drama, Crime, Thriller",
-    "seasons": [
-      {
-        "id": 101,
-        "name": "Season 1",
-        "seasonNumber": 1,
-        "year": 2008,
-        "episodes": [
-          {
-            "id": 10101,
-            "name": "Pilot",
-            "episodeNumber": 1,
-            "airDate": "2008-01-20",
-            "runtime": 60
-          },
-          {
-            "id": 10102,
-            "name": "Cat's in the Bag...",
-            "episodeNumber": 2,
-            "airDate": "2008-01-27",
-            "runtime": 60
-          },
-          {
-            "id": 10103,
-            "name": "...and the Bag's in the River",
-            "episodeNumber": 3,
-            "airDate": "2008-02-10",
-            "runtime": 60
-          },
-          {
-            "id": 10104,
-            "name": "Cancer Man",
-            "episodeNumber": 4,
-            "airDate": "2008-02-17",
-            "runtime": 60
-          },
-          {
-            "id": 10105,
-            "name": "Gray Matter",
-            "episodeNumber": 5,
-            "airDate": "2008-02-24",
-            "runtime": 60
-          },
-          {
-            "id": 10106,
-            "name": "Crazy Handful of Nothin'",
-            "episodeNumber": 6,
-            "airDate": "2008-03-02",
-            "runtime": 60
-          },
-          {
-            "id": 10107,
-            "name": "A No-Rough-Stuff-Type Deal",
-            "episodeNumber": 7,
-            "airDate": "2008-03-09",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 102,
-        "name": "Season 2",
-        "seasonNumber": 2,
-        "year": 2009,
-        "episodes": [
-          {
-            "id": 10201,
-            "name": "Seven Thirty-Seven",
-            "episodeNumber": 1,
-            "airDate": "2009-03-08",
-            "runtime": 60
-          },
-          {
-            "id": 10202,
-            "name": "Grilled",
-            "episodeNumber": 2,
-            "airDate": "2009-03-15",
-            "runtime": 60
-          },
-          {
-            "id": 10203,
-            "name": "Bit by a Dead Bee",
-            "episodeNumber": 3,
-            "airDate": "2009-03-22",
-            "runtime": 60
-          },
-          {
-            "id": 10204,
-            "name": "Down",
-            "episodeNumber": 4,
-            "airDate": "2009-03-29",
-            "runtime": 60
-          },
-          {
-            "id": 10205,
-            "name": "Breakage",
-            "episodeNumber": 5,
-            "airDate": "2009-04-05",
-            "runtime": 60
-          },
-          {
-            "id": 10206,
-            "name": "Peekaboo",
-            "episodeNumber": 6,
-            "airDate": "2009-04-12",
-            "runtime": 60
-          },
-          {
-            "id": 10207,
-            "name": "Negro Y Azul",
-            "episodeNumber": 7,
-            "airDate": "2009-04-19",
-            "runtime": 60
-          },
-          {
-            "id": 10208,
-            "name": "Better Call Saul",
-            "episodeNumber": 8,
-            "airDate": "2009-04-26",
-            "runtime": 60
-          },
-          {
-            "id": 10209,
-            "name": "4 Days Out",
-            "episodeNumber": 9,
-            "airDate": "2009-05-03",
-            "runtime": 60
-          },
-          {
-            "id": 10210,
-            "name": "Over",
-            "episodeNumber": 10,
-            "airDate": "2009-05-10",
-            "runtime": 60
-          },
-          {
-            "id": 10211,
-            "name": "Mandala",
-            "episodeNumber": 11,
-            "airDate": "2009-05-17",
-            "runtime": 60
-          },
-          {
-            "id": 10212,
-            "name": "Phoenix",
-            "episodeNumber": 12,
-            "airDate": "2009-05-24",
-            "runtime": 60
-          },
-          {
-            "id": 10213,
-            "name": "ABQ",
-            "episodeNumber": 13,
-            "airDate": "2009-05-31",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 103,
-        "name": "Season 3",
-        "seasonNumber": 3,
-        "year": 2010,
-        "episodes": [
-          {
-            "id": 10301,
-            "name": "No Más",
-            "episodeNumber": 1,
-            "airDate": "2010-03-21",
-            "runtime": 60
-          },
-          {
-            "id": 10302,
-            "name": "Caballo sin Nombre",
-            "episodeNumber": 2,
-            "airDate": "2010-03-28",
-            "runtime": 60
-          },
-          {
-            "id": 10303,
-            "name": "I.F.T.",
-            "episodeNumber": 3,
-            "airDate": "2010-04-04",
-            "runtime": 60
-          },
-          {
-            "id": 10304,
-            "name": "Green Light",
-            "episodeNumber": 4,
-            "airDate": "2010-04-11",
-            "runtime": 60
-          },
-          {
-            "id": 10305,
-            "name": "Más",
-            "episodeNumber": 5,
-            "airDate": "2010-04-18",
-            "runtime": 60
-          },
-          {
-            "id": 10306,
-            "name": "Sunset",
-            "episodeNumber": 6,
-            "airDate": "2010-04-25",
-            "runtime": 60
-          },
-          {
-            "id": 10307,
-            "name": "One Minute",
-            "episodeNumber": 7,
-            "airDate": "2010-05-02",
-            "runtime": 60
-          },
-          {
-            "id": 10308,
-            "name": "I See You",
-            "episodeNumber": 8,
-            "airDate": "2010-05-09",
-            "runtime": 60
-          },
-          {
-            "id": 10309,
-            "name": "Kafkaesque",
-            "episodeNumber": 9,
-            "airDate": "2010-05-16",
-            "runtime": 60
-          },
-          {
-            "id": 10310,
-            "name": "Fly",
-            "episodeNumber": 10,
-            "airDate": "2010-05-23",
-            "runtime": 60
-          },
-          {
-            "id": 10311,
-            "name": "Abiquiu",
-            "episodeNumber": 11,
-            "airDate": "2010-05-30",
-            "runtime": 60
-          },
-          {
-            "id": 10312,
-            "name": "Half Measures",
-            "episodeNumber": 12,
-            "airDate": "2010-06-06",
-            "runtime": 60
-          },
-          {
-            "id": 10313,
-            "name": "Full Measure",
-            "episodeNumber": 13,
-            "airDate": "2010-06-13",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 104,
-        "name": "Season 4",
-        "seasonNumber": 4,
-        "year": 2011,
-        "episodes": [
-          {
-            "id": 10401,
-            "name": "Box Cutter",
-            "episodeNumber": 1,
-            "airDate": "2011-07-17",
-            "runtime": 60
-          },
-          {
-            "id": 10402,
-            "name": "Thirty-Eight Snub",
-            "episodeNumber": 2,
-            "airDate": "2011-07-24",
-            "runtime": 60
-          },
-          {
-            "id": 10403,
-            "name": "Open House",
-            "episodeNumber": 3,
-            "airDate": "2011-07-31",
-            "runtime": 60
-          },
-          {
-            "id": 10404,
-            "name": "Bullet Points",
-            "episodeNumber": 4,
-            "airDate": "2011-08-07",
-            "runtime": 60
-          },
-          {
-            "id": 10405,
-            "name": "Shotgun",
-            "episodeNumber": 5,
-            "airDate": "2011-08-14",
-            "runtime": 60
-          },
-          {
-            "id": 10406,
-            "name": "Cornered",
-            "episodeNumber": 6,
-            "airDate": "2011-08-21",
-            "runtime": 60
-          },
-          {
-            "id": 10407,
-            "name": "Problem Dog",
-            "episodeNumber": 7,
-            "airDate": "2011-08-28",
-            "runtime": 60
-          },
-          {
-            "id": 10408,
-            "name": "Hermanos",
-            "episodeNumber": 8,
-            "airDate": "2011-09-04",
-            "runtime": 60
-          },
-          {
-            "id": 10409,
-            "name": "Bug",
-            "episodeNumber": 9,
-            "airDate": "2011-09-11",
-            "runtime": 60
-          },
-          {
-            "id": 10410,
-            "name": "Salud",
-            "episodeNumber": 10,
-            "airDate": "2011-09-18",
-            "runtime": 60
-          },
-          {
-            "id": 10411,
-            "name": "Crawl Space",
-            "episodeNumber": 11,
-            "airDate": "2011-09-25",
-            "runtime": 60
-          },
-          {
-            "id": 10412,
-            "name": "End Times",
-            "episodeNumber": 12,
-            "airDate": "2011-10-02",
-            "runtime": 60
-          },
-          {
-            "id": 10413,
-            "name": "Face Off",
-            "episodeNumber": 13,
-            "airDate": "2011-10-09",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 105,
-        "name": "Season 5",
-        "seasonNumber": 5,
-        "year": 2012,
-        "episodes": [
-          {
-            "id": 10501,
-            "name": "Live Free or Die",
-            "episodeNumber": 1,
-            "airDate": "2012-07-15",
-            "runtime": 60
-          },
-          {
-            "id": 10502,
-            "name": "Madrigal",
-            "episodeNumber": 2,
-            "airDate": "2012-07-22",
-            "runtime": 60
-          },
-          {
-            "id": 10503,
-            "name": "Hazard Pay",
-            "episodeNumber": 3,
-            "airDate": "2012-07-29",
-            "runtime": 60
-          },
-          {
-            "id": 10504,
-            "name": "Fifty-One",
-            "episodeNumber": 4,
-            "airDate": "2012-08-05",
-            "runtime": 60
-          },
-          {
-            "id": 10505,
-            "name": "Dead Freight",
-            "episodeNumber": 5,
-            "airDate": "2012-08-12",
-            "runtime": 60
-          },
-          {
-            "id": 10506,
-            "name": "Buyout",
-            "episodeNumber": 6,
-            "airDate": "2012-08-19",
-            "runtime": 60
-          },
-          {
-            "id": 10507,
-            "name": "Say My Name",
-            "episodeNumber": 7,
-            "airDate": "2012-08-26",
-            "runtime": 60
-          },
-          {
-            "id": 10508,
-            "name": "Gliding Over All",
-            "episodeNumber": 8,
-            "airDate": "2012-09-02",
-            "runtime": 60
-          },
-          {
-            "id": 10509,
-            "name": "Blood Money",
-            "episodeNumber": 9,
-            "airDate": "2013-08-11",
-            "runtime": 60
-          },
-          {
-            "id": 10510,
-            "name": "Buried",
-            "episodeNumber": 10,
-            "airDate": "2013-08-18",
-            "runtime": 60
-          },
-          {
-            "id": 10511,
-            "name": "Confessions",
-            "episodeNumber": 11,
-            "airDate": "2013-08-25",
-            "runtime": 60
-          },
-          {
-            "id": 10512,
-            "name": "Rabid Dog",
-            "episodeNumber": 12,
-            "airDate": "2013-09-01",
-            "runtime": 60
-          },
-          {
-            "id": 10513,
-            "name": "To'hajiilee",
-            "episodeNumber": 13,
-            "airDate": "2013-09-08",
-            "runtime": 60
-          },
-          {
-            "id": 10514,
-            "name": "Ozymandias",
-            "episodeNumber": 14,
-            "airDate": "2013-09-15",
-            "runtime": 60
-          },
-          {
-            "id": 10515,
-            "name": "Granite State",
-            "episodeNumber": 15,
-            "airDate": "2013-09-22",
-            "runtime": 60
-          },
-          {
-            "id": 10516,
-            "name": "Felina",
-            "episodeNumber": 16,
-            "airDate": "2013-09-29",
-            "runtime": 60
-          }
-        ]
-      }
-    ]
-
-
-  },
-  {
-    "id": 2,
-    "name": "The Wire",
-    "network": "HBO",
-    "premiered": 2002,
-    "genre": "Drama, Crime",
-    "seasons": [
-      {
-        "id": 201,
-        "name": "Season 1",
-        "seasonNumber": 1,
-        "year": 2002,
-        "episodes": [
-          {
-            "id": 20101,
-            "name": "The Target",
-            "episodeNumber": 1,
-            "airDate": "2002-06-02",
-            "runtime": 60
-          },
-          {
-            "id": 20102,
-            "name": "The Detail",
-            "episodeNumber": 2,
-            "airDate": "2002-06-09",
-            "runtime": 60
-          },
-          {
-            "id": 20103,
-            "name": "The Buys",
-            "episodeNumber": 3,
-            "airDate": "2002-06-16",
-            "runtime": 60
-          },
-          {
-            "id": 20104,
-            "name": "Old Cases",
-            "episodeNumber": 4,
-            "airDate": "2002-06-23",
-            "runtime": 60
-          },
-          {
-            "id": 20105,
-            "name": "The Pager",
-            "episodeNumber": 5,
-            "airDate": "2002-06-30",
-            "runtime": 60
-          },
-          {
-            "id": 20106,
-            "name": "The Wire",
-            "episodeNumber": 6,
-            "airDate": "2002-07-07",
-            "runtime": 60
-          },
-          {
-            "id": 20107,
-            "name": "One Arrest",
-            "episodeNumber": 7,
-            "airDate": "2002-07-21",
-            "runtime": 60
-          },
-          {
-            "id": 20108,
-            "name": "Lessons",
-            "episodeNumber": 8,
-            "airDate": "2002-07-28",
-            "runtime": 60
-          },
-          {
-            "id": 20109,
-            "name": "Game Day",
-            "episodeNumber": 9,
-            "airDate": "2002-08-04",
-            "runtime": 60
-          },
-          {
-            "id": 20110,
-            "name": "The Cost",
-            "episodeNumber": 10,
-            "airDate": "2002-08-11",
-            "runtime": 60
-          },
-          {
-            "id": 20111,
-            "name": "The Hunt",
-            "episodeNumber": 11,
-            "airDate": "2002-08-18",
-            "runtime": 60
-          },
-          {
-            "id": 20112,
-            "name": "Cleaning Up",
-            "episodeNumber": 12,
-            "airDate": "2002-09-01",
-            "runtime": 60
-          },
-          {
-            "id": 20113,
-            "name": "Sentencing",
-            "episodeNumber": 13,
-            "airDate": "2002-09-08",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 202,
-        "name": "Season 2",
-        "seasonNumber": 2,
-        "year": 2003,
-        "episodes": [
-          {
-            "id": 20201,
-            "name": "Ebb Tide",
-            "episodeNumber": 1,
-            "airDate": "2003-06-01",
-            "runtime": 60
-          },
-          {
-            "id": 20202,
-            "name": "Collateral Damage",
-            "episodeNumber": 2,
-            "airDate": "2003-06-08",
-            "runtime": 60
-          },
-          {
-            "id": 20203,
-            "name": "Hot Shots",
-            "episodeNumber": 3,
-            "airDate": "2003-06-15",
-            "runtime": 60
-          },
-          {
-            "id": 20204,
-            "name": "Hard Cases",
-            "episodeNumber": 4,
-            "airDate": "2003-06-22",
-            "runtime": 60
-          },
-          {
-            "id": 20205,
-            "name": "Undertow",
-            "episodeNumber": 5,
-            "airDate": "2003-06-29",
-            "runtime": 60
-          },
-          {
-            "id": 20206,
-            "name": "All Prologue",
-            "episodeNumber": 6,
-            "airDate": "2003-07-06",
-            "runtime": 60
-          },
-          {
-            "id": 20207,
-            "name": "Backwash",
-            "episodeNumber": 7,
-            "airDate": "2003-07-13",
-            "runtime": 60
-          },
-          {
-            "id": 20208,
-            "name": "Duck and Cover",
-            "episodeNumber": 8,
-            "airDate": "2003-07-27",
-            "runtime": 60
-          },
-          {
-            "id": 20209,
-            "name": "Stray Rounds",
-            "episodeNumber": 9,
-            "airDate": "2003-08-03",
-            "runtime": 60
-          },
-          {
-            "id": 20210,
-            "name": "Storm Warnings",
-            "episodeNumber": 10,
-            "airDate": "2003-08-10",
-            "runtime": 60
-          },
-          {
-            "id": 20211,
-            "name": "Bad Dreams",
-            "episodeNumber": 11,
-            "airDate": "2003-08-17",
-            "runtime": 60
-          },
-          {
-            "id": 20212,
-            "name": "Port in a Storm",
-            "episodeNumber": 12,
-            "airDate": "2003-08-24",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 203,
-        "name": "Season 3",
-        "seasonNumber": 3,
-        "year": 2004,
-        "episodes": [
-          {
-            "id": 20301,
-            "name": "Time After Time",
-            "episodeNumber": 1,
-            "airDate": "2004-09-19",
-            "runtime": 60
-          },
-          {
-            "id": 20302,
-            "name": "All Due Respect",
-            "episodeNumber": 2,
-            "airDate": "2004-09-26",
-            "runtime": 60
-          },
-          {
-            "id": 20303,
-            "name": "Dead Soldiers",
-            "episodeNumber": 3,
-            "airDate": "2004-10-03",
-            "runtime": 60
-          },
-          {
-            "id": 20304,
-            "name": "Hamsterdam",
-            "episodeNumber": 4,
-            "airDate": "2004-10-10",
-            "runtime": 60
-          },
-          {
-            "id": 20305,
-            "name": "Straight and True",
-            "episodeNumber": 5,
-            "airDate": "2004-10-17",
-            "runtime": 60
-          },
-          {
-            "id": 20306,
-            "name": "Homecoming",
-            "episodeNumber": 6,
-            "airDate": "2004-10-31",
-            "runtime": 60
-          },
-          {
-            "id": 20307,
-            "name": "Back Burners",
-            "episodeNumber": 7,
-            "airDate": "2004-11-07",
-            "runtime": 60
-          },
-          {
-            "id": 20308,
-            "name": "Moral Midgetry",
-            "episodeNumber": 8,
-            "airDate": "2004-11-14",
-            "runtime": 60
-          },
-          {
-            "id": 20309,
-            "name": "Slapstick",
-            "episodeNumber": 9,
-            "airDate": "2004-11-21",
-            "runtime": 60
-          },
-          {
-            "id": 20310,
-            "name": "Reformation",
-            "episodeNumber": 10,
-            "airDate": "2004-11-28",
-            "runtime": 60
-          },
-          {
-            "id": 20311,
-            "name": "Middle Ground",
-            "episodeNumber": 11,
-            "airDate": "2004-12-12",
-            "runtime": 60
-          },
-          {
-            "id": 20312,
-            "name": "Mission Accomplished",
-            "episodeNumber": 12,
-            "airDate": "2004-12-19",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 204,
-        "name": "Season 4",
-        "seasonNumber": 4,
-        "year": 2006,
-        "episodes": [
-          {
-            "id": 20401,
-            "name": "Boys of Summer",
-            "episodeNumber": 1,
-            "airDate": "2006-09-10",
-            "runtime": 60
-          },
-          {
-            "id": 20402,
-            "name": "Soft Eyes",
-            "episodeNumber": 2,
-            "airDate": "2006-09-17",
-            "runtime": 60
-          },
-          {
-            "id": 20403,
-            "name": "Home Rooms",
-            "episodeNumber": 3,
-            "airDate": "2006-09-24",
-            "runtime": 60
-          },
-          {
-            "id": 20404,
-            "name": "Refugees",
-            "episodeNumber": 4,
-            "airDate": "2006-10-01",
-            "runtime": 60
-          },
-          {
-            "id": 20405,
-            "name": "Alliances",
-            "episodeNumber": 5,
-            "airDate": "2006-10-08",
-            "runtime": 60
-          },
-          {
-            "id": 20406,
-            "name": "Margin of Error",
-            "episodeNumber": 6,
-            "airDate": "2006-10-15",
-            "runtime": 60
-          },
-          {
-            "id": 20407,
-            "name": "Unto Others",
-            "episodeNumber": 7,
-            "airDate": "2006-10-29",
-            "runtime": 60
-          },
-          {
-            "id": 20408,
-            "name": "Corner Boys",
-            "episodeNumber": 8,
-            "airDate": "2006-11-05",
-            "runtime": 60
-          },
-          {
-            "id": 20409,
-            "name": "Know Your Place",
-            "episodeNumber": 9,
-            "airDate": "2006-11-12",
-            "runtime": 60
-          },
-          {
-            "id": 20410,
-            "name": "Misgivings",
-            "episodeNumber": 10,
-            "airDate": "2006-11-19",
-            "runtime": 60
-          },
-          {
-            "id": 20411,
-            "name": "A New Day",
-            "episodeNumber": 11,
-            "airDate": "2006-11-26",
-            "runtime": 60
-          },
-          {
-            "id": 20412,
-            "name": "That's Got His Own",
-            "episodeNumber": 12,
-            "airDate": "2006-12-03",
-            "runtime": 60
-          },
-          {
-            "id": 20413,
-            "name": "Final Grades",
-            "episodeNumber": 13,
-            "airDate": "2006-12-10",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 205,
-        "name": "Season 5",
-        "seasonNumber": 5,
-        "year": 2008,
-        "episodes": [
-          {
-            "id": 20501,
-            "name": "More with Less",
-            "episodeNumber": 1,
-            "airDate": "2008-01-06",
-            "runtime": 60
-          },
-          {
-            "id": 20502,
-            "name": "Unconfirmed Reports",
-            "episodeNumber": 2,
-            "airDate": "2008-01-13",
-            "runtime": 60
-          },
-          {
-            "id": 20503,
-            "name": "Not for Attribution",
-            "episodeNumber": 3,
-            "airDate": "2008-01-20",
-            "runtime": 60
-          },
-          {
-            "id": 20504,
-            "name": "Transitions",
-            "episodeNumber": 4,
-            "airDate": "2008-01-27",
-            "runtime": 60
-          },
-          {
-            "id": 20505,
-            "name": "React Quotes",
-            "episodeNumber": 5,
-            "airDate": "2008-02-03",
-            "runtime": 60
-          },
-          {
-            "id": 20506,
-            "name": "The Dickensian Aspect",
-            "episodeNumber": 6,
-            "airDate": "2008-02-10",
-            "runtime": 60
-          },
-          {
-            "id": 20507,
-            "name": "Took",
-            "episodeNumber": 7,
-            "airDate": "2008-02-17",
-            "runtime": 60
-          },
-          {
-            "id": 20508,
-            "name": "Clarifications",
-            "episodeNumber": 8,
-            "airDate": "2008-02-24",
-            "runtime": 60
-          },
-          {
-            "id": 20509,
-            "name": "Late Editions",
-            "episodeNumber": 9,
-            "airDate": "2008-03-02",
-            "runtime": 60
-          },
-          {
-            "id": 20510,
-            "name": "-30-",
-            "episodeNumber": 10,
-            "airDate": "2008-03-09",
-            "runtime": 60
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "name": "The Sopranos",
-    "network": "HBO",
-    "premiered": 1999,
-    "genre": "Drama, Crime",
-    "seasons": [
-      {
-        "id": 301,
-        "name": "Season 1",
-        "seasonNumber": 1,
-        "year": 1999,
-        "episodes": [
-          {
-            "id": 30101,
-            "name": "Pilot",
-            "episodeNumber": 1,
-            "airDate": "1999-01-10",
-            "runtime": 60
-          },
-          {
-            "id": 30102,
-            "name": "46 Long",
-            "episodeNumber": 2,
-            "airDate": "1999-01-17",
-            "runtime": 60
-          },
-          {
-            "id": 30103,
-            "name": "Denial, Anger, Acceptance",
-            "episodeNumber": 3,
-            "airDate": "1999-01-24",
-            "runtime": 60
-          },
-          {
-            "id": 30104,
-            "name": "Meadowlands",
-            "episodeNumber": 4,
-            "airDate": "1999-01-31",
-            "runtime": 60
-          },
-          {
-            "id": 30105,
-            "name": "College",
-            "episodeNumber": 5,
-            "airDate": "1999-02-07",
-            "runtime": 60
-          },
-          {
-            "id": 30106,
-            "name": "Pax Soprana",
-            "episodeNumber": 6,
-            "airDate": "1999-02-14",
-            "runtime": 60
-          },
-          {
-            "id": 30107,
-            "name": "Down Neck",
-            "episodeNumber": 7,
-            "airDate": "1999-02-21",
-            "runtime": 60
-          },
-          {
-            "id": 30108,
-            "name": "The Legend of Tennessee Moltisanti",
-            "episodeNumber": 8,
-            "airDate": "1999-02-28",
-            "runtime": 60
-          },
-          {
-            "id": 30109,
-            "name": "Boca",
-            "episodeNumber": 9,
-            "airDate": "1999-03-07",
-            "runtime": 60
-          },
-          {
-            "id": 30110,
-            "name": "A Hit is a Hit",
-            "episodeNumber": 10,
-            "airDate": "1999-03-14",
-            "runtime": 60
-          },
-          {
-            "id": 30111,
-            "name": "Nobody Knows Anything",
-            "episodeNumber": 11,
-            "airDate": "1999-03-21",
-            "runtime": 60
-          },
-          {
-            "id": 30112,
-            "name": "Isabella",
-            "episodeNumber": 12,
-            "airDate": "1999-03-28",
-            "runtime": 60
-          },
-          {
-            "id": 30113,
-            "name": "I Dream of Jeannie Cusamano",
-            "episodeNumber": 13,
-            "airDate": "1999-04-04",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 302,
-        "name": "Season 2",
-        "seasonNumber": 2,
-        "year": 2000,
-        "episodes": [
-          {
-            "id": 30201,
-            "name": "Guy Walks Into a Psychiatrist's Office",
-            "episodeNumber": 1,
-            "airDate": "2000-01-16",
-            "runtime": 60
-          },
-          {
-            "id": 30202,
-            "name": "Do Not Resuscitate",
-            "episodeNumber": 2,
-            "airDate": "2000-01-23",
-            "runtime": 60
-          },
-          {
-            "id": 30203,
-            "name": "Toodle-Fucking-Oo",
-            "episodeNumber": 3,
-            "airDate": "2000-01-30",
-            "runtime": 60
-          },
-          {
-            "id": 30204,
-            "name": "Commendatori",
-            "episodeNumber": 4,
-            "airDate": "2000-02-06",
-            "runtime": 60
-          },
-          {
-            "id": 30205,
-            "name": "Big Girls Don't Cry",
-            "episodeNumber": 5,
-            "airDate": "2000-02-13",
-            "runtime": 60
-          },
-          {
-            "id": 30206,
-            "name": "The Happy Wanderer",
-            "episodeNumber": 6,
-            "airDate": "2000-02-20",
-            "runtime": 60
-          },
-          {
-            "id": 30207,
-            "name": "D-Girl",
-            "episodeNumber": 7,
-            "airDate": "2000-02-27",
-            "runtime": 60
-          },
-          {
-            "id": 30208,
-            "name": "Full Leather Jacket",
-            "episodeNumber": 8,
-            "airDate": "2000-03-05",
-            "runtime": 60
-          },
-          {
-            "id": 30209,
-            "name": "From Where to Eternity",
-            "episodeNumber": 9,
-            "airDate": "2000-03-12",
-            "runtime": 60
-          },
-          {
-            "id": 30210,
-            "name": "Bust Out",
-            "episodeNumber": 10,
-            "airDate": "2000-03-19",
-            "runtime": 60
-          },
-          {
-            "id": 30211,
-            "name": "House Arrest",
-            "episodeNumber": 11,
-            "airDate": "2000-03-26",
-            "runtime": 60
-          },
-          {
-            "id": 30212,
-            "name": "Knight in White Satin Armor",
-            "episodeNumber": 12,
-            "airDate": "2000-04-02",
-            "runtime": 60
-          },
-          {
-            "id": 30213,
-            "name": "Funhouse",
-            "episodeNumber": 13,
-            "airDate": "2000-04-09",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 303,
-        "name": "Season 3",
-        "seasonNumber": 3,
-        "year": 2001,
-        "episodes": [
-          {
-            "id": 30301,
-            "name": "Mr. Ruggerio's Neighborhood",
-            "episodeNumber": 1,
-            "airDate": "2001-03-04",
-            "runtime": 60
-          },
-          {
-            "id": 30302,
-            "name": "Proshai, Livushka",
-            "episodeNumber": 2,
-            "airDate": "2001-03-04",
-            "runtime": 60
-          },
-          {
-            "id": 30303,
-            "name": "Fortunate Son",
-            "episodeNumber": 3,
-            "airDate": "2001-03-11",
-            "runtime": 60
-          },
-          {
-            "id": 30304,
-            "name": "Employee of the Month",
-            "episodeNumber": 4,
-            "airDate": "2001-03-18",
-            "runtime": 60
-          },
-          {
-            "id": 30305,
-            "name": "Another Toothpick",
-            "episodeNumber": 5,
-            "airDate": "2001-03-25",
-            "runtime": 60
-          },
-          {
-            "id": 30306,
-            "name": "University",
-            "episodeNumber": 6,
-            "airDate": "2001-04-01",
-            "runtime": 60
-          },
-          {
-            "id": 30307,
-            "name": "Second Opinion",
-            "episodeNumber": 7,
-            "airDate": "2001-04-08",
-            "runtime": 60
-          },
-          {
-            "id": 30308,
-            "name": "He is Risen",
-            "episodeNumber": 8,
-            "airDate": "2001-04-15",
-            "runtime": 60
-          },
-          {
-            "id": 30309,
-            "name": "The Telltale Moozadell",
-            "episodeNumber": 9,
-            "airDate": "2001-04-22",
-            "runtime": 60
-          },
-          {
-            "id": 30310,
-            "name": "To Save Us All from Satan's Power",
-            "episodeNumber": 10,
-            "airDate": "2001-04-29",
-            "runtime": 60
-          },
-          {
-            "id": 30311,
-            "name": "Pine Barrens",
-            "episodeNumber": 11,
-            "airDate": "2001-05-06",
-            "runtime": 60
-          },
-          {
-            "id": 30312,
-            "name": "Amour Fou",
-            "episodeNumber": 12,
-            "airDate": "2001-05-13",
-            "runtime": 60
-          },
-          {
-            "id": 30313,
-            "name": "Army of One",
-            "episodeNumber": 13,
-            "airDate": "2001-05-20",
-            "runtime": 60
-          }
-        ]
-      },
-      {
-        "id": 304,
-        "name": "Season 4",
-        "seasonNumber": 4,
-        "year": 2002,
-        "episodes": [
-          {
-            "id": 30401,
-            "name": "For All Debts Public and Private",
-            "episodeNumber": 1,
-            "airDate": "2002-09-15",
-            "runtime": 60
-          },
-          {
-            "id": 30402,
-            "name": "No Show",
-            "episodeNumber": 2,
-            "airDate": "2002-09-22",
-            "runtime": 60
-          },
-          {
-            "id": 30403,
-            "name": "Christopher",
-            "episodeNumber": 3,
-            "airDate": "2002-09-29",
-            "runtime": 60
-          },
-          {
-            "id": 30404,
-            "name": "The Weight",
-            "episodeNumber": 4,
-            "airDate": "2002-10-06",
-            "runtime": 60
-          },
-          {
-            "id": 30405,
-            "name": "Pie-O-My",
-            "episodeNumber": 5,
-            "airDate": "2002-10-13",
-            "runtime": 60
-          },
-          {
-            "id": 30406,
-            "name": "Everybody Hurts",
-            "episodeNumber": 6,
-            "airDate": "2002-10-20",
-            "runtime": 60
-          },
-          {
-            "id": 30407,
-            "name": "Watching Too Much Television",
-            "episodeNumber": 7,
-            "airDate": "2002-10-27",
-            "runtime": 60
-          },
-          {
-            "id": 30408,
-            "name": "Mergers &amp; Acquisitions",
-            "episodeNumber": 8,
-            "airDate": "2002-11-03",
-            "runtime": 60
-          },
-          {
-            "id": 30409,
-            "name": "Whoever Did This",
-            "episodeNumber": 9,
-            "airDate": "2002-11-10",
-            "runtime": 60
-          },
-          {
-            "id": 30410,
-            "name": "The Strong, Silent Type",
-            "episodeNumber": 10,
-            "airDate": "2002-11-17",
-            "runtime": 60
-          },
-          {
-            "id": 30411,
-            "name": "Calling All Cars",
-            "episodeNumber": 11,
-            "airDate": "2002-11-24",
-            "runtime": 60
-          },
-          {
-            "id": 30412,
-            "name": "Eloise",
-            "episodeNumber": 12,
-            "airDate": "2002-12-01",
-            "runtime": 60
-          },
-          {
-            "id": 30413,
-            "name": "Whitecaps",
-            "episodeNumber": 13,
-            "airDate": "2002-12-08",
-            "runtime": 72
-          }
-        ]
-      },
-      {
-        "id": 305,
-        "name": "Season 5",
-        "seasonNumber": 5,
-        "year": 2004,
-        "episodes": [
-          {
-            "id": 30501,
-            "name": "Two Tonys",
-            "episodeNumber": 1,
-            "airDate": "2004-03-07",
-            "runtime": 54
-          },
-          {
-            "id": 30502,
-            "name": "Rat Pack",
-            "episodeNumber": 2,
-            "airDate": "2004-03-14",
-            "runtime": 57
-          },
-          {
-            "id": 30503,
-            "name": "Where's Johnny?",
-            "episodeNumber": 3,
-            "airDate": "2004-03-21",
-            "runtime": 55
-          },
-          {
-            "id": 30504,
-            "name": "All Happy Families...",
-            "episodeNumber": 4,
-            "airDate": "2004-03-28",
-            "runtime": 53
-          },
-          {
-            "id": 30505,
-            "name": "Irregular Around the Margins",
-            "episodeNumber": 5,
-            "airDate": "2004-04-04",
-            "runtime": 52
-          },
-          {
-            "id": 30506,
-            "name": "Sentimental Education",
-            "episodeNumber": 6,
-            "airDate": "2004-04-11",
-            "runtime": 55
-          },
-          {
-            "id": 30507,
-            "name": "In Camelot",
-            "episodeNumber": 7,
-            "airDate": "2004-04-18",
-            "runtime": 55
-          },
-          {
-            "id": 30508,
-            "name": "Marco Polo",
-            "episodeNumber": 8,
-            "airDate": "2004-04-25",
-            "runtime": 54
-          },
-          {
-            "id": 30509,
-            "name": "Unidentified Black Males",
-            "episodeNumber": 9,
-            "airDate": "2004-05-02",
-            "runtime": 59
-          },
-          {
-            "id": 30510,
-            "name": "Cold Cuts",
-            "episodeNumber": 10,
-            "airDate": "2004-05-09",
-            "runtime": 52
-          },
-          {
-            "id": 30511,
-            "name": "The Test Dream",
-            "episodeNumber": 11,
-            "airDate": "2004-05-16",
-            "runtime": 50
-          },
-          {
-            "id": 30512,
-            "name": "Long Term Parking",
-            "episodeNumber": 12,
-            "airDate": "2004-05-23",
-            "runtime": 57
-          },
-          {
-            "id": 30513,
-            "name": "All Due Respect",
-            "episodeNumber": 13,
-            "airDate": "2004-06-06",
-            "runtime": 56
-          }
-        ]
-      },
-      {
-        "id": 306,
-        "name": "Season 6",
-        "seasonNumber": 6,
-        "year": 2006,
-        "episodes": [
-          {
-            "id": 30601,
-            "name": "Members Only",
-            "episodeNumber": 1,
-            "airDate": "2006-03-12",
-            "runtime": 53
-          },
-          {
-            "id": 30602,
-            "name": "Join the Club",
-            "episodeNumber": 2,
-            "airDate": "2006-03-19",
-            "runtime": 54
-          },
-          {
-            "id": 30603,
-            "name": "Mayham",
-            "episodeNumber": 3,
-            "airDate": "2006-03-26",
-            "runtime": 57
-          },
-          {
-            "id": 30604,
-            "name": "The Fleshy Part of the Thigh",
-            "episodeNumber": 4,
-            "airDate": "2006-04-02",
-            "runtime": 60
-          },
-          {
-            "id": 30605,
-            "name": "Mr. & Mrs. John Sacrimoni Request...",
-            "episodeNumber": 5,
-            "airDate": "2006-04-09",
-            "runtime": 53
-          },
-          {
-            "id": 30606,
-            "name": "Live Free or Die",
-            "episodeNumber": 6,
-            "airDate": "2006-04-16",
-            "runtime": 58
-          },
-          {
-            "id": 30607,
-            "name": "Luxury Lounge",
-            "episodeNumber": 7,
-            "airDate": "2006-04-23",
-            "runtime": 55
-          },
-          {
-            "id": 30608,
-            "name": "Johnny Cakes",
-            "episodeNumber": 8,
-            "airDate": "2006-04-30",
-            "runtime": 55
-          },
-          {
-            "id": 30609,
-            "name": "The Ride",
-            "episodeNumber": 9,
-            "airDate": "2006-05-07",
-            "runtime": 54
-          },
-          {
-            "id": 30610,
-            "name": "Moe n' Joe",
-            "episodeNumber": 10,
-            "airDate": "2006-05-14",
-            "runtime": 54
-          },
-          {
-            "id": 30611,
-            "name": "Cold Stones",
-            "episodeNumber": 11,
-            "airDate": "2006-05-21",
-            "runtime": 57
-          },
-          {
-            "id": 30612,
-            "name": "Kaisha",
-            "episodeNumber": 12,
-            "airDate": "2006-06-04",
-            "runtime": 59
-          },
-          {
-            "id": 30613,
-            "name": "Soprano Home Movies",
-            "episodeNumber": 13,
-            "airDate": "2007-04-08",
-            "runtime": 50
-          },
-          {
-            "id": 30614,
-            "name": "Stage 5",
-            "episodeNumber": 14,
-            "airDate": "2007-04-15",
-            "runtime": 55
-          },
-          {
-            "id": 30615,
-            "name": "Remember When",
-            "episodeNumber": 15,
-            "airDate": "2007-04-22",
-            "runtime": 56
-          },
-          {
-            "id": 30616,
-            "name": "Chasing It",
-            "episodeNumber": 16,
-            "airDate": "2007-04-29",
-            "runtime": 52
-          },
-          {
-            "id": 30617,
-            "name": "Walk Like a Man",
-            "episodeNumber": 17,
-            "airDate": "2007-05-06",
-            "runtime": 58
-          },
-          {
-            "id": 30618,
-            "name": "Kennedy and Heidi",
-            "episodeNumber": 18,
-            "airDate": "2007-05-13",
-            "runtime": 55
-          },
-          {
-            "id": 30619,
-            "name": "The Second Coming",
-            "episodeNumber": 19,
-            "airDate": "2007-05-20",
-            "runtime": 55
-          },
-          {
-            "id": 30620,
-            "name": "The Blue Comet",
-            "episodeNumber": 20,
-            "airDate": "2007-06-03",
-            "runtime": 53
-          },
-          {
-            "id": 30621,
-            "name": "Made in America",
-            "episodeNumber": 21,
-            "airDate": "2007-06-10",
-            "runtime": 62
-          }
-        ]
-      }
-    ]
-  }
-];
-
-function App(){
-  const [text,setText]=useState(JSON.stringify(SAMPLE,null,2));
-  const [model,setModel]=useState(null);
-  const [error,setError]=useState('');
-  const [stack,setStack]=useState([newFrame(ROOTNAME,[],ROOTNAME)]);
-  const [showInput,setShowInput]=useState(true);
-  const [idKeysText,setIdKeysText]=useState(DEFAULT_ID_KEYS.join(', '));
-  const [nameKeysText,setNameKeysText]=useState(DEFAULT_NAME_KEYS.join(', '));
-  const [facetMaxText,setFacetMaxText]=useState(String(DEFAULT_FACET_MAX));
-  const [cellHeightText,setCellHeightText]=useState(String(DEFAULT_CELL_HEIGHT));
-  const [filterMode,setFilterMode]=useState(null);
-  const [dark,setDark]=useState(()=>{
-    try{ const s=localStorage.getItem('jtd-dark'); if(s!=null) return s==='1'; }catch(e){}
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
-  const [themeColor,setThemeColor]=useState(()=>{ try{ return localStorage.getItem('jtd-color')||null; }catch(e){ return null; } });
-
-  useEffect(()=>{
-    document.documentElement.classList.toggle('dark', dark);
-    applyThemeColor(themeColor, dark);
-    try{ localStorage.setItem('jtd-dark', dark?'1':'0'); themeColor? localStorage.setItem('jtd-color', themeColor) : localStorage.removeItem('jtd-color'); }catch(e){}
-  },[dark, themeColor]);
-  // live update: re-parse whenever the JSON (or key config) changes and refresh the
-  // table as soon as the input is valid JSON. Invalid input keeps the last good view.
-  useEffect(()=>{
-    const timer=setTimeout(()=>{
-      const raw=text.trim();
-      if(!raw){ setError('Paste JSON to begin.'); return; }
-      let data; try{ data=JSON.parse(raw); } catch(e){ setError('Invalid JSON: '+e.message); return; }
-      const parseKeys=(s)=> s.split(/[,\s]+/).map(x=>x.trim()).filter(Boolean);
-      const m=buildTables(data, ROOTNAME, {idKeys:parseKeys(idKeysText), nameKeys:parseKeys(nameKeysText)});
-      if(!m.order.length){ setError('No tabular data found.'); return; }
-      setError('');
-      setModel(m); setStack([newFrame(ROOTNAME,[],ROOTNAME)]);
-    }, 300);
-    return ()=>clearTimeout(timer);
-  },[text, idKeysText, nameKeysText]);
-  const frame=stack[stack.length-1];
-  const onDrill=(childKey,parentTable,parentId,parentName)=>
-    setStack(s=>[...s, newFrame(childKey, [{ancestorTable:parentTable, id:parentId, name:parentName}], parentName+' › '+childKey)]);
-  // clicking a parent name on a child row: jump to the parent table filtered to that one parent
-  const onParent=(parentTable,parentId,parentName)=>
-    setStack(s=>[...s, newFrame(parentTable, [{self:true, id:parentId, name:parentName}], parentName+' · '+parentTable)]);
-  const switchTable=(name)=> setStack([newFrame(name,[],name)]);
-  const crumbTo=(i)=> setStack(s=>s.slice(0,i+1));
-
-  const frameKey = stack.map(f=>f.table+':'+f.filters.map(x=>x.id).join(',')).join('>');
-
-  return <div className="flex h-full flex-col">
-    {/* header */}
-    <header className="flex flex-wrap items-center gap-3 border-b px-5 py-3">
-      <h1 className="text-base font-semibold tracking-tight">JSON Thing</h1>
-      <span className="hidden text-xs text-muted-foreground sm:inline">The best JSON explorer with support for nested data and complex filtering and sorting.</span>
-      <div className="ml-auto flex items-center gap-2">
-        <Button variant="outline" size="sm" className="h-8" onClick={()=>setShowInput(v=>!v)}>{showInput?'Hide input':'Show input'}</Button>
-        <Button variant="outline" size="sm" className="h-8" onClick={()=>{ setText(JSON.stringify(SAMPLE,null,2)); }}>Load sample</Button>
-        <ColorPicker value={themeColor} onChange={setThemeColor}/>
-        <Button variant="ghost" size="iconSm" onClick={()=>setDark(d=>!d)} title="Toggle theme">{dark?<Sun className="h-4 w-4"/>:<Moon className="h-4 w-4"/>}</Button>
-        <a href="https://github.com/ryn-cx/json-thing" target="_blank" rel="noreferrer" title="View on GitHub"
-          className="inline-flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
-          <Github className="h-4 w-4"/>
-        </a>
-      </div>
-    </header>
-
-    <div className="flex min-h-0 flex-1">
-      {/* input */}
-      {showInput &&
-        <aside className="flex w-[360px] shrink-0 flex-col border-r">
-          <div className="flex items-center gap-2 border-b px-4 py-2.5">
-            <span className="text-sm font-medium">JSON input</span>
-            <span className="text-xs text-muted-foreground">array or object</span>
-          </div>
-          <textarea value={text} onChange={e=>setText(e.target.value)} spellCheck={false}
-            className="m-3 flex-1 resize-none rounded-md border bg-background p-3 font-mono text-xs leading-5 outline-none focus-visible:ring-1 focus-visible:ring-ring"/>
-          {/* special-key config — first matching key in each list is used */}
-          <div className="space-y-2 border-t px-4 py-3">
-            <div className="text-xs font-medium">Special keys <span className="font-normal text-muted-foreground">— first match found is used</span></div>
-            <label className="block space-y-1">
-              <span className="text-xs text-muted-foreground">ID keys</span>
-              <Input value={idKeysText} onChange={e=>setIdKeysText(e.target.value)} placeholder="id" className="h-8 font-mono text-xs"/>
-            </label>
-            <label className="block space-y-1">
-              <span className="text-xs text-muted-foreground">Name keys</span>
-              <Input value={nameKeysText} onChange={e=>setNameKeysText(e.target.value)} placeholder="name" className="h-8 font-mono text-xs"/>
-            </label>
-            <p className="text-[11px] text-muted-foreground">Comma- or space-separated. Applied automatically.</p>
-            <label className="block space-y-1 pt-1">
-              <span className="text-xs text-muted-foreground">Max unique values to facet</span>
-              <Input type="number" min="1" value={facetMaxText} onChange={e=>setFacetMaxText(e.target.value)} placeholder={String(DEFAULT_FACET_MAX)} className="h-8 font-mono text-xs"/>
-            </label>
-            <p className="text-[11px] text-muted-foreground">Columns with at most this many distinct values get faceted (multi-select) filtering. Applied instantly.</p>
-            <label className="block space-y-1 pt-1">
-              <span className="text-xs text-muted-foreground">Max cell height (px)</span>
-              <Input type="number" min="0" value={cellHeightText} onChange={e=>setCellHeightText(e.target.value)} placeholder={String(DEFAULT_CELL_HEIGHT)} className="h-8 font-mono text-xs"/>
-            </label>
-            <p className="text-[11px] text-muted-foreground">Tall cell content is clipped to this height. 0 or blank = no limit. Applied instantly.</p>
-          </div>
-          {error && <div className="px-4 pb-3 text-xs text-destructive whitespace-pre-wrap">{error}</div>}
-        </aside>}
-
-      {/* main */}
-      <main className="flex min-h-0 flex-1 flex-col gap-3 p-4">
-        {model && <>
-          {/* table tabs */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            {model.order.map(name=>{ const active=name===frame.table && stack.length===1;
-              return <button key={name} onClick={()=>switchTable(name)}
-                className={cn('rounded-full border px-3 py-1 text-xs transition-colors', active?'border-primary bg-primary text-primary-foreground':'bg-secondary text-muted-foreground hover:text-foreground')}>
-                {name} <span className="opacity-70">({model.tables[name].rows.length})</span>
-              </button>; })}
-          </div>
-          {/* breadcrumbs */}
-          {stack.length>1 &&
-            <div className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
-              {stack.map((f,i)=> <React.Fragment key={i}>
-                {i>0 && <ChevronRight className="h-3.5 w-3.5 opacity-50"/>}
-                <button className="text-primary hover:underline" onClick={()=>crumbTo(i)}>
-                  {i===0? f.table : (f.filters[0]? f.filters[0].name+' · '+f.table : f.table)}
-                </button>
-              </React.Fragment>)}
-            </div>}
-
-          <DataTable key={frameKey} mt={model.tables[frame.table]} frame={frame} onDrill={onDrill} onParent={onParent}
-            getRow={(table,id)=> model.tables[table] ? model.tables[table].rows.find(r=>String(r.__id)===String(id)) : null}
-            filterMode={filterMode} setFilterMode={setFilterMode} facetMax={Math.max(1, parseInt(facetMaxText,10)||DEFAULT_FACET_MAX)}
-            maxCellHeight={(parseInt(cellHeightText,10)>0)?parseInt(cellHeightText,10):null}/>
-        </>}
-        {!model && <div className="grid flex-1 place-items-center text-sm text-muted-foreground">Paste valid JSON to see it, or click <b className="mx-1">Load sample</b>.</div>}
-      </main>
-    </div>
-  </div>;
+/* ---------------------------------------------------------------------
+ * Column-visibility persistence, per table ("category").
+ * Keyed by table name; stores a signature of the current column set so
+ * the saved choice is discarded automatically when the columns change.
+ * ------------------------------------------------------------------- */
+const COLVIS_KEY='jtd-colvis';
+// suppress persistence while a table is being torn down: dt.destroy() re-shows
+// hidden columns (firing column-visibility), which would otherwise clobber the
+// saved state with "nothing hidden".
+let suppressColVisSave=false;
+function loadColVis(){ try{ return JSON.parse(localStorage.getItem(COLVIS_KEY))||{}; }catch(_){ return {}; } }
+function saveColVis(store){ try{ localStorage.setItem(COLVIS_KEY, JSON.stringify(store)); }catch(_){} }
+const colSig = titles => titles.join('');
+function rememberColVis(tableName, titles){
+  if(suppressColVisSave) return;
+  const store=loadColVis();
+  const hidden=[];
+  dt.columns().every(function(i){ if(!this.visible()) hidden.push(titles[i]); });
+  store[tableName]={ sig:colSig(titles), hidden };
+  saveColVis(store);
+}
+function applyColVis(tableName, titles){
+  const saved=loadColVis()[tableName];
+  if(!saved || saved.sig!==colSig(titles)) return;      // categories changed → ignore
+  const hide=new Set(saved.hidden);
+  if(!hide.size) return;                                  // nothing hidden
+  titles.forEach((t,i)=>{ dt.column(i).visible(!hide.has(t), false); });  // batch, no redraw
+  dt.columns.adjust().draw(false);
 }
 
-createRoot(document.getElementById('root')).render(<App/>);
+function esc(s){ if(s==null) return ''; return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+const cellRender = (d,type)=> type==='display' ? '<div class="cell">'+esc(d)+'</div>' : d;
+
+function buildTabs(){
+  const el=document.getElementById('tabs'); el.innerHTML='';
+  MODEL.order.forEach(name=>{
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='button is-small'+(name===currentTable?' is-dark':'');
+    b.innerHTML=esc(name)+' <span class="ml-1 has-text-grey">('+MODEL.tables[name].rows.length+')</span>';
+    b.onclick=()=>render(name);
+    el.appendChild(b);
+  });
+}
+
+function render(tableName, filter){
+  currentTable=tableName;
+  buildTabs();
+  const t=MODEL.tables[tableName];
+  const {anc, sca, lnk}=computeColumns(t);
+
+  const columns=[], getters=[];
+  anc.forEach(a=>{
+    const g=ancGet(a), gid=ancIdGet(a);
+    // ancestor name column: link to that ancestor's own record modal
+    columns.push({title:a+' ↑', render:(d,type,rowArr,meta)=>{
+      if(type!=='display') return d==null?'':d;
+      if(d==null || d==='') return '<div class="cell"></div>';
+      return '<div class="cell"><a href="#" class="anclnk" data-ridx="'+meta.row+'" data-anc="'+esc(a)+'">'+esc(d)+'</a></div>';
+    }}); getters.push(r=>g(r));
+    columns.push({title:a+'_id', type:'string', render:cellRender}); getters.push(r=>{ const v=gid(r); return v==null?'':String(v); });
+  });
+  const nameSet=new Set(MODEL.nameKeys||[]);
+  sca.forEach(k=>{
+    if(nameSet.has(k)){
+      // name-key column: link each value to the record's ancestry modal
+      columns.push({title:k, render:(d,type,rowArr,meta)=>{
+        if(type!=='display') return d==null?'':d;
+        if(d==null || d==='') return '<div class="cell"></div>';
+        return '<div class="cell"><a href="#" class="namelnk" data-ridx="'+meta.row+'">'+esc(d)+'</a></div>';
+      }});
+    } else {
+      columns.push({title:k, render:cellRender});
+    }
+    getters.push(r=>r.cells[k]);
+  });
+  lnk.forEach(k=>{
+    columns.push({ title:k, render:(d,type,rowArr,meta)=>{
+      if(type!=='display') return d;
+      if(!(Number(d)>0)) return '<span class="muted">0</span>';
+      const parent=t.rows[meta.row];
+      // full ancestry of the clicked parent: every ancestor id + the parent's own id
+      const fc=parent.__anc.map(a=>({col:a.table+'_id', value:String(a.id)}));
+      fc.push({col:tableName+'_id', value:String(parent.__id)});
+      return '<a href="#" class="lnk" data-goto="'+esc(k)+'" data-filter="'+esc(JSON.stringify(fc))+'">'+esc(d)+'</a>';
+    }});
+    getters.push(r=>r.links[k]||0);
+  });
+
+  const data=t.rows.map(r=> getters.map(g=>{ const v=g(r); return v==null?'':v; }));
+
+  // when arriving via a parent's link, pre-fill SearchBuilder with the clicked
+  // parent's FULL ancestry (every "<table>_id"), so cousins are excluded and the
+  // data is filtered correctly regardless of what was filtered before.
+  const colTitles=columns.map(c=>c.title);
+  const sb={}, crit=[], titles=new Set(colTitles);
+  if(filter && filter.crit){
+    // arriving via a parent's link: pre-fill with the clicked parent's ancestry.
+    // (Switching tables via the tabs passes no filter, so filters reset there.)
+    filter.crit.forEach(c=>{ if(titles.has(c.col)) crit.push({ data:c.col, origData:c.col, condition:'=', value:[c.value] }); });
+    if(crit.length) sb.preDefined={ logic:'AND', criteria:crit };
+  }
+
+  if(dt){ suppressColVisSave=true; dt.destroy(); suppressColVisSave=false; document.getElementById('grid').innerHTML=''; }
+  dt=new DataTable('#grid', {
+    data, columns,
+    order: [],
+    scrollX: true,
+    pageLength: 30,
+    lengthMenu: [10,20,30,40,50,100],
+    layout: {
+      top1:       { searchBuilder: sb },
+      topStart:   { pageLength: {}, buttons: ['colvis'] },
+      topEnd:     'search',
+      bottomStart:'info',
+      bottomEnd:  'paging'
+    }
+  });
+
+  // restore this table's saved column visibility (if its columns are unchanged),
+  // then persist any further toggles the user makes.
+  applyColVis(tableName, colTitles);
+  dt.on('column-visibility.dt', ()=> rememberColVis(tableName, colTitles));
+}
+
+function applyCellHeight(){
+  const v=parseInt(document.getElementById('cellheight').value,10);
+  document.documentElement.style.setProperty('--cellh', v>0 ? v+'px' : 'none');
+}
+
+function parse(){
+  const err=document.getElementById('error');
+  const raw=document.getElementById('json').value.trim();
+  if(!raw){ err.textContent='Paste JSON to begin.'; return; }
+  let data; try{ data=JSON.parse(raw); } catch(e){ err.textContent='Invalid JSON: '+e.message; return; }
+  const parseKeys=s=> s.split(/[\s,]+/).map(x=>x.trim()).filter(Boolean);
+  const idKeys=parseKeys(document.getElementById('idkeys').value);
+  const nameKeys=parseKeys(document.getElementById('namekeys').value);
+  const m=buildTables(data, ROOTNAME, {idKeys, nameKeys});
+  if(!m.order.length){ err.textContent='No tabular data found.'; return; }
+  err.textContent='';
+  MODEL=m;
+  const tbl=(currentTable && m.tables[currentTable]) ? currentTable : m.order[0];
+  render(tbl);
+}
+const scheduleParse=()=>{ clearTimeout(parseTimer); parseTimer=setTimeout(parse, 400); };
+
+/* clicking a link-count cell jumps to that child table, filtered to the clicked
+   parent's full ancestor-id chain (embedded on the link). */
+$(document).on('click', 'a.lnk', function(e){ e.preventDefault();
+  let crit=[];
+  try{ crit=JSON.parse(this.getAttribute('data-filter'))||[]; }catch(_){}
+  render(this.getAttribute('data-goto'), { crit });
+});
+
+/* =====================================================================
+ * Record modal — clicking a name shows the record's ancestry chain
+ * (self → parent → … → root). Each record lists all of its field values
+ * and links to its own table, filtered to just that record.
+ * ===================================================================== */
+function critForNode(nodes, i){
+  // ancestor-id columns for everything above node i, plus node i's own id column
+  const crit=nodes.slice(0,i).map(a=>({ col:a.table+'_id', value:String(a.id) }));
+  const n=nodes[i];
+  if(n.idKey!=null) crit.push({ col:n.idKey, value:n.id });
+  return crit;
+}
+/* find a node's full record (with all its cells) in its own table, matched by
+   its id and its exact ancestor chain so same-id cousins aren't confused */
+function findNodeRow(nodes, i){
+  const table=MODEL && MODEL.tables[nodes[i].table];
+  if(!table) return null;
+  const id=nodes[i].id, prefix=nodes.slice(0,i);
+  return table.rows.find(r=>{
+    if(r.__id!==id || r.__anc.length!==prefix.length) return false;
+    for(let j=0;j<prefix.length;j++){ if(r.__anc[j].table!==prefix[j].table || r.__anc[j].id!==prefix[j].id) return false; }
+    return true;
+  }) || null;
+}
+/* filter that selects a record's children: the record's full ancestry + its own
+   id (expressed as "<recordTable>_id"), matching the main table's count links */
+function childCrit(row, table){
+  const fc=row.__anc.map(a=>({ col:a.table+'_id', value:String(a.id) }));
+  fc.push({ col:table+'_id', value:String(row.__id) });
+  return fc;
+}
+function fieldsTable(row, table){
+  const rows=Object.entries(row.cells).map(([k,v])=>
+    '<tr><th>'+esc(k)+'</th><td>'+(v==null||v===''?'<span class="muted">—</span>':esc(v))+'</td></tr>').join('');
+  // child collections (link counts) become drill-down links, like the table cells
+  const crit=esc(JSON.stringify(childCrit(row, table)));
+  const links=Object.entries(row.links).map(([k,n])=>{
+    const val=Number(n)>0
+      ? '<a href="#" class="childlnk" data-goto="'+esc(k)+'" data-filter="'+crit+'">'+esc(n)+'</a>'
+      : '<span class="muted">'+esc(n)+'</span>';
+    return '<tr><th>'+esc(k)+'</th><td>'+val+'</td></tr>';
+  }).join('');
+  return '<table class="rec-fields">'+rows+links+'</table>';
+}
+function openRecordModal(row, table){
+  // root → self, so nodes[last] is the record itself
+  table=table||currentTable;
+  const nodes=row.__anc.concat([{ table, id:row.__id, name:row.__name, idKey:row.__idKey }]);
+  document.getElementById('recModalTitle').textContent=row.__name;
+  const body=document.getElementById('recModalBody');
+  body.innerHTML='';
+  for(let i=nodes.length-1;i>=0;i--){           // self first, then up to root
+    const n=nodes[i], crit=critForNode(nodes,i);
+    const rec=(i===nodes.length-1) ? row : findNodeRow(nodes,i);
+    const div=document.createElement('div');
+    div.className='rec-node';
+    const head=document.createElement('a');
+    head.href='#'; head.className='rec-head';
+    head.innerHTML='<span class="tag is-info is-light lvl">'+esc(n.table)+'</span>'
+                 + '<span class="nm">'+esc(n.name)+'</span>';
+    head.addEventListener('click', ev=>{ ev.preventDefault(); closeRecModal(); render(n.table, { crit }); });
+    div.appendChild(head);
+    div.insertAdjacentHTML('beforeend', rec ? fieldsTable(rec, n.table) : '<p class="muted">(record not found)</p>');
+    body.appendChild(div);
+  }
+  document.getElementById('recModal').classList.add('is-active');
+}
+function closeRecModal(){ document.getElementById('recModal').classList.remove('is-active'); }
+
+/* clicking a name opens that record's modal */
+$(document).on('click', 'a.namelnk', function(e){ e.preventDefault();
+  const ridx=+this.getAttribute('data-ridx');
+  const row=MODEL && MODEL.tables[currentTable] && MODEL.tables[currentTable].rows[ridx];
+  if(row) openRecordModal(row);
+});
+/* clicking an ancestor name opens THAT ancestor record's modal (e.g. the root or
+   season of an episode) — showing just that record and its own ancestry. */
+$(document).on('click', 'a.anclnk', function(e){ e.preventDefault();
+  const ridx=+this.getAttribute('data-ridx'), ancTable=this.getAttribute('data-anc');
+  const row=MODEL && MODEL.tables[currentTable] && MODEL.tables[currentTable].rows[ridx];
+  if(!row) return;
+  const k=row.__anc.findIndex(x=>x.table===ancTable);
+  if(k<0) return;
+  const ancRow=findNodeRow(row.__anc.slice(0,k+1), k);   // the ancestor's full record
+  if(ancRow) openRecordModal(ancRow, ancTable);
+});
+/* clicking a child-collection count inside the modal drills into that child
+   table, filtered to the record whose modal is open */
+$(document).on('click', 'a.childlnk', function(e){ e.preventDefault();
+  let crit=[]; try{ crit=JSON.parse(this.getAttribute('data-filter'))||[]; }catch(_){}
+  closeRecModal();
+  render(this.getAttribute('data-goto'), { crit });
+});
+/* modal close: background, delete button, or Esc */
+document.querySelectorAll('#recModal [data-close]').forEach(el=> el.addEventListener('click', closeRecModal));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeRecModal(); });
+
+/* header button opens/closes the sidebar */
+document.getElementById('sidebarToggle').addEventListener('click', ()=>{
+  document.querySelector('.app-body').classList.toggle('is-collapsed');
+  if(dt) dt.columns.adjust();
+});
+
+/* light/dark toggle — Bulma data-theme, persisted to localStorage */
+function setTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('jtd-theme', t); }catch(_){}
+  document.getElementById('themeIcon').textContent = t==='dark' ? '☀️' : '🌙';
+}
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+  setTheme(document.documentElement.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+});
+setTheme(document.documentElement.getAttribute('data-theme')==='dark' ? 'dark' : 'light'); // sync icon
+
+/* persist the input fields (JSON + ID/Name keys + cell height) so a reload
+   restores what the user was working on instead of resetting to defaults */
+const INPUT_KEY='jtd-inputs';
+const INPUT_IDS=['json','idkeys','namekeys','cellheight'];
+function saveInputs(){
+  try{
+    const o={}; INPUT_IDS.forEach(id=> o[id]=document.getElementById(id).value);
+    localStorage.setItem(INPUT_KEY, JSON.stringify(o));
+  }catch(_){}
+}
+function loadInputs(){ try{ return JSON.parse(localStorage.getItem(INPUT_KEY))||null; }catch(_){ return null; } }
+
+['json','idkeys','namekeys'].forEach(id=> document.getElementById(id).addEventListener('input', scheduleParse));
+document.getElementById('cellheight').addEventListener('input', applyCellHeight);
+INPUT_IDS.forEach(id=> document.getElementById(id).addEventListener('input', saveInputs));
+document.getElementById('loadSample').addEventListener('click', loadSampleIntoInput);
+
+/* =====================================================================
+ * sample data — loaded from sample.json
+ * ===================================================================== */
+let SAMPLE=null;
+function loadSampleIntoInput(){
+  if(!SAMPLE) return;
+  document.getElementById('json').value=JSON.stringify(SAMPLE,null,2);
+  saveInputs();
+  parse();
+}
+
+/* boot */
+applyCellHeight();
+// restore saved inputs; only fall back to the bundled sample if there's none
+const savedInputs=loadInputs();
+if(savedInputs){
+  INPUT_IDS.forEach(id=>{ if(savedInputs[id]!=null) document.getElementById(id).value=savedInputs[id]; });
+  applyCellHeight();
+}
+const hasSavedJson=!!document.getElementById('json').value.trim();
+if(hasSavedJson) parse();
+
+fetch('sample.json')
+  .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+  .then(data=>{ SAMPLE=data; if(!hasSavedJson) loadSampleIntoInput(); })
+  .catch(e=>{ if(!hasSavedJson) document.getElementById('error').textContent='Could not load sample.json ('+e.message+'). Paste JSON to begin.'; });
 </script>
 </body>
 </html>

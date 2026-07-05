@@ -1,6 +1,8 @@
-# JSON Thing
+# [JSON Thing](https://jsonthing.com)
 
-**Live app: [jsonthing.com](https://jsonthing.com)**
+![JSON Thing preview](preview.png)
+
+## Overview
 
 JSON Thing is a web based JSON viewer that turns JSON files into easily navigatable
 tables with advanced filtering and sorting options.
@@ -25,8 +27,6 @@ tables with advanced filtering and sorting options.
    - Configurable automatic column faceting.
 - **Fully client side**: Your data is secure. The only network requests made are the
   ones required to load the initial webpage.
-- **Customizable color scheme**: Light and dark mode with the option to choose an accent
-  color.
 - **Details view**: Easily see all of the information for a row in a list so you don't
   have to constantly be scrolling to read everything.
 
@@ -36,3 +36,8 @@ Existing tools lacked the ability to easily navigate large nested JSON structure
 Thing's usage of linked tables makes it feel like you are using a custom made admin
 interface instead of a single table/list/graph that quickly becomes complex and
 impossible to navigate.
+
+# Credits
+
+The table UI is built with and inspired by [tablecn](https://tablecn.com) by
+[sadmann7](https://github.com/sadmann7/tablecn).

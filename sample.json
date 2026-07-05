@@ -1,0 +1,1613 @@
+[
+  {
+    "id": 1,
+    "name": "Breaking Bad",
+    "network": "AMC",
+    "premiered": 2008,
+    "genre": "Drama, Crime, Thriller",
+    "seasons": [
+      {
+        "id": 101,
+        "name": "Season 1",
+        "seasonNumber": 1,
+        "year": 2008,
+        "episodes": [
+          {
+            "id": 10101,
+            "name": "Pilot",
+            "episodeNumber": 1,
+            "airDate": "2008-01-20",
+            "runtime": 60
+          },
+          {
+            "id": 10102,
+            "name": "Cat's in the Bag...",
+            "episodeNumber": 2,
+            "airDate": "2008-01-27",
+            "runtime": 60
+          },
+          {
+            "id": 10103,
+            "name": "...and the Bag's in the River",
+            "episodeNumber": 3,
+            "airDate": "2008-02-10",
+            "runtime": 60
+          },
+          {
+            "id": 10104,
+            "name": "Cancer Man",
+            "episodeNumber": 4,
+            "airDate": "2008-02-17",
+            "runtime": 60
+          },
+          {
+            "id": 10105,
+            "name": "Gray Matter",
+            "episodeNumber": 5,
+            "airDate": "2008-02-24",
+            "runtime": 60
+          },
+          {
+            "id": 10106,
+            "name": "Crazy Handful of Nothin'",
+            "episodeNumber": 6,
+            "airDate": "2008-03-02",
+            "runtime": 60
+          },
+          {
+            "id": 10107,
+            "name": "A No-Rough-Stuff-Type Deal",
+            "episodeNumber": 7,
+            "airDate": "2008-03-09",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 102,
+        "name": "Season 2",
+        "seasonNumber": 2,
+        "year": 2009,
+        "episodes": [
+          {
+            "id": 10201,
+            "name": "Seven Thirty-Seven",
+            "episodeNumber": 1,
+            "airDate": "2009-03-08",
+            "runtime": 60
+          },
+          {
+            "id": 10202,
+            "name": "Grilled",
+            "episodeNumber": 2,
+            "airDate": "2009-03-15",
+            "runtime": 60
+          },
+          {
+            "id": 10203,
+            "name": "Bit by a Dead Bee",
+            "episodeNumber": 3,
+            "airDate": "2009-03-22",
+            "runtime": 60
+          },
+          {
+            "id": 10204,
+            "name": "Down",
+            "episodeNumber": 4,
+            "airDate": "2009-03-29",
+            "runtime": 60
+          },
+          {
+            "id": 10205,
+            "name": "Breakage",
+            "episodeNumber": 5,
+            "airDate": "2009-04-05",
+            "runtime": 60
+          },
+          {
+            "id": 10206,
+            "name": "Peekaboo",
+            "episodeNumber": 6,
+            "airDate": "2009-04-12",
+            "runtime": 60
+          },
+          {
+            "id": 10207,
+            "name": "Negro Y Azul",
+            "episodeNumber": 7,
+            "airDate": "2009-04-19",
+            "runtime": 60
+          },
+          {
+            "id": 10208,
+            "name": "Better Call Saul",
+            "episodeNumber": 8,
+            "airDate": "2009-04-26",
+            "runtime": 60
+          },
+          {
+            "id": 10209,
+            "name": "4 Days Out",
+            "episodeNumber": 9,
+            "airDate": "2009-05-03",
+            "runtime": 60
+          },
+          {
+            "id": 10210,
+            "name": "Over",
+            "episodeNumber": 10,
+            "airDate": "2009-05-10",
+            "runtime": 60
+          },
+          {
+            "id": 10211,
+            "name": "Mandala",
+            "episodeNumber": 11,
+            "airDate": "2009-05-17",
+            "runtime": 60
+          },
+          {
+            "id": 10212,
+            "name": "Phoenix",
+            "episodeNumber": 12,
+            "airDate": "2009-05-24",
+            "runtime": 60
+          },
+          {
+            "id": 10213,
+            "name": "ABQ",
+            "episodeNumber": 13,
+            "airDate": "2009-05-31",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 103,
+        "name": "Season 3",
+        "seasonNumber": 3,
+        "year": 2010,
+        "episodes": [
+          {
+            "id": 10301,
+            "name": "No Más",
+            "episodeNumber": 1,
+            "airDate": "2010-03-21",
+            "runtime": 60
+          },
+          {
+            "id": 10302,
+            "name": "Caballo sin Nombre",
+            "episodeNumber": 2,
+            "airDate": "2010-03-28",
+            "runtime": 60
+          },
+          {
+            "id": 10303,
+            "name": "I.F.T.",
+            "episodeNumber": 3,
+            "airDate": "2010-04-04",
+            "runtime": 60
+          },
+          {
+            "id": 10304,
+            "name": "Green Light",
+            "episodeNumber": 4,
+            "airDate": "2010-04-11",
+            "runtime": 60
+          },
+          {
+            "id": 10305,
+            "name": "Más",
+            "episodeNumber": 5,
+            "airDate": "2010-04-18",
+            "runtime": 60
+          },
+          {
+            "id": 10306,
+            "name": "Sunset",
+            "episodeNumber": 6,
+            "airDate": "2010-04-25",
+            "runtime": 60
+          },
+          {
+            "id": 10307,
+            "name": "One Minute",
+            "episodeNumber": 7,
+            "airDate": "2010-05-02",
+            "runtime": 60
+          },
+          {
+            "id": 10308,
+            "name": "I See You",
+            "episodeNumber": 8,
+            "airDate": "2010-05-09",
+            "runtime": 60
+          },
+          {
+            "id": 10309,
+            "name": "Kafkaesque",
+            "episodeNumber": 9,
+            "airDate": "2010-05-16",
+            "runtime": 60
+          },
+          {
+            "id": 10310,
+            "name": "Fly",
+            "episodeNumber": 10,
+            "airDate": "2010-05-23",
+            "runtime": 60
+          },
+          {
+            "id": 10311,
+            "name": "Abiquiu",
+            "episodeNumber": 11,
+            "airDate": "2010-05-30",
+            "runtime": 60
+          },
+          {
+            "id": 10312,
+            "name": "Half Measures",
+            "episodeNumber": 12,
+            "airDate": "2010-06-06",
+            "runtime": 60
+          },
+          {
+            "id": 10313,
+            "name": "Full Measure",
+            "episodeNumber": 13,
+            "airDate": "2010-06-13",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 104,
+        "name": "Season 4",
+        "seasonNumber": 4,
+        "year": 2011,
+        "episodes": [
+          {
+            "id": 10401,
+            "name": "Box Cutter",
+            "episodeNumber": 1,
+            "airDate": "2011-07-17",
+            "runtime": 60
+          },
+          {
+            "id": 10402,
+            "name": "Thirty-Eight Snub",
+            "episodeNumber": 2,
+            "airDate": "2011-07-24",
+            "runtime": 60
+          },
+          {
+            "id": 10403,
+            "name": "Open House",
+            "episodeNumber": 3,
+            "airDate": "2011-07-31",
+            "runtime": 60
+          },
+          {
+            "id": 10404,
+            "name": "Bullet Points",
+            "episodeNumber": 4,
+            "airDate": "2011-08-07",
+            "runtime": 60
+          },
+          {
+            "id": 10405,
+            "name": "Shotgun",
+            "episodeNumber": 5,
+            "airDate": "2011-08-14",
+            "runtime": 60
+          },
+          {
+            "id": 10406,
+            "name": "Cornered",
+            "episodeNumber": 6,
+            "airDate": "2011-08-21",
+            "runtime": 60
+          },
+          {
+            "id": 10407,
+            "name": "Problem Dog",
+            "episodeNumber": 7,
+            "airDate": "2011-08-28",
+            "runtime": 60
+          },
+          {
+            "id": 10408,
+            "name": "Hermanos",
+            "episodeNumber": 8,
+            "airDate": "2011-09-04",
+            "runtime": 60
+          },
+          {
+            "id": 10409,
+            "name": "Bug",
+            "episodeNumber": 9,
+            "airDate": "2011-09-11",
+            "runtime": 60
+          },
+          {
+            "id": 10410,
+            "name": "Salud",
+            "episodeNumber": 10,
+            "airDate": "2011-09-18",
+            "runtime": 60
+          },
+          {
+            "id": 10411,
+            "name": "Crawl Space",
+            "episodeNumber": 11,
+            "airDate": "2011-09-25",
+            "runtime": 60
+          },
+          {
+            "id": 10412,
+            "name": "End Times",
+            "episodeNumber": 12,
+            "airDate": "2011-10-02",
+            "runtime": 60
+          },
+          {
+            "id": 10413,
+            "name": "Face Off",
+            "episodeNumber": 13,
+            "airDate": "2011-10-09",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 105,
+        "name": "Season 5",
+        "seasonNumber": 5,
+        "year": 2012,
+        "episodes": [
+          {
+            "id": 10501,
+            "name": "Live Free or Die",
+            "episodeNumber": 1,
+            "airDate": "2012-07-15",
+            "runtime": 60
+          },
+          {
+            "id": 10502,
+            "name": "Madrigal",
+            "episodeNumber": 2,
+            "airDate": "2012-07-22",
+            "runtime": 60
+          },
+          {
+            "id": 10503,
+            "name": "Hazard Pay",
+            "episodeNumber": 3,
+            "airDate": "2012-07-29",
+            "runtime": 60
+          },
+          {
+            "id": 10504,
+            "name": "Fifty-One",
+            "episodeNumber": 4,
+            "airDate": "2012-08-05",
+            "runtime": 60
+          },
+          {
+            "id": 10505,
+            "name": "Dead Freight",
+            "episodeNumber": 5,
+            "airDate": "2012-08-12",
+            "runtime": 60
+          },
+          {
+            "id": 10506,
+            "name": "Buyout",
+            "episodeNumber": 6,
+            "airDate": "2012-08-19",
+            "runtime": 60
+          },
+          {
+            "id": 10507,
+            "name": "Say My Name",
+            "episodeNumber": 7,
+            "airDate": "2012-08-26",
+            "runtime": 60
+          },
+          {
+            "id": 10508,
+            "name": "Gliding Over All",
+            "episodeNumber": 8,
+            "airDate": "2012-09-02",
+            "runtime": 60
+          },
+          {
+            "id": 10509,
+            "name": "Blood Money",
+            "episodeNumber": 9,
+            "airDate": "2013-08-11",
+            "runtime": 60
+          },
+          {
+            "id": 10510,
+            "name": "Buried",
+            "episodeNumber": 10,
+            "airDate": "2013-08-18",
+            "runtime": 60
+          },
+          {
+            "id": 10511,
+            "name": "Confessions",
+            "episodeNumber": 11,
+            "airDate": "2013-08-25",
+            "runtime": 60
+          },
+          {
+            "id": 10512,
+            "name": "Rabid Dog",
+            "episodeNumber": 12,
+            "airDate": "2013-09-01",
+            "runtime": 60
+          },
+          {
+            "id": 10513,
+            "name": "To'hajiilee",
+            "episodeNumber": 13,
+            "airDate": "2013-09-08",
+            "runtime": 60
+          },
+          {
+            "id": 10514,
+            "name": "Ozymandias",
+            "episodeNumber": 14,
+            "airDate": "2013-09-15",
+            "runtime": 60
+          },
+          {
+            "id": 10515,
+            "name": "Granite State",
+            "episodeNumber": 15,
+            "airDate": "2013-09-22",
+            "runtime": 60
+          },
+          {
+            "id": 10516,
+            "name": "Felina",
+            "episodeNumber": 16,
+            "airDate": "2013-09-29",
+            "runtime": 60
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "The Wire",
+    "network": "HBO",
+    "premiered": 2002,
+    "genre": "Drama, Crime",
+    "seasons": [
+      {
+        "id": 201,
+        "name": "Season 1",
+        "seasonNumber": 1,
+        "year": 2002,
+        "episodes": [
+          {
+            "id": 20101,
+            "name": "The Target",
+            "episodeNumber": 1,
+            "airDate": "2002-06-02",
+            "runtime": 60
+          },
+          {
+            "id": 20102,
+            "name": "The Detail",
+            "episodeNumber": 2,
+            "airDate": "2002-06-09",
+            "runtime": 60
+          },
+          {
+            "id": 20103,
+            "name": "The Buys",
+            "episodeNumber": 3,
+            "airDate": "2002-06-16",
+            "runtime": 60
+          },
+          {
+            "id": 20104,
+            "name": "Old Cases",
+            "episodeNumber": 4,
+            "airDate": "2002-06-23",
+            "runtime": 60
+          },
+          {
+            "id": 20105,
+            "name": "The Pager",
+            "episodeNumber": 5,
+            "airDate": "2002-06-30",
+            "runtime": 60
+          },
+          {
+            "id": 20106,
+            "name": "The Wire",
+            "episodeNumber": 6,
+            "airDate": "2002-07-07",
+            "runtime": 60
+          },
+          {
+            "id": 20107,
+            "name": "One Arrest",
+            "episodeNumber": 7,
+            "airDate": "2002-07-21",
+            "runtime": 60
+          },
+          {
+            "id": 20108,
+            "name": "Lessons",
+            "episodeNumber": 8,
+            "airDate": "2002-07-28",
+            "runtime": 60
+          },
+          {
+            "id": 20109,
+            "name": "Game Day",
+            "episodeNumber": 9,
+            "airDate": "2002-08-04",
+            "runtime": 60
+          },
+          {
+            "id": 20110,
+            "name": "The Cost",
+            "episodeNumber": 10,
+            "airDate": "2002-08-11",
+            "runtime": 60
+          },
+          {
+            "id": 20111,
+            "name": "The Hunt",
+            "episodeNumber": 11,
+            "airDate": "2002-08-18",
+            "runtime": 60
+          },
+          {
+            "id": 20112,
+            "name": "Cleaning Up",
+            "episodeNumber": 12,
+            "airDate": "2002-09-01",
+            "runtime": 60
+          },
+          {
+            "id": 20113,
+            "name": "Sentencing",
+            "episodeNumber": 13,
+            "airDate": "2002-09-08",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 202,
+        "name": "Season 2",
+        "seasonNumber": 2,
+        "year": 2003,
+        "episodes": [
+          {
+            "id": 20201,
+            "name": "Ebb Tide",
+            "episodeNumber": 1,
+            "airDate": "2003-06-01",
+            "runtime": 60
+          },
+          {
+            "id": 20202,
+            "name": "Collateral Damage",
+            "episodeNumber": 2,
+            "airDate": "2003-06-08",
+            "runtime": 60
+          },
+          {
+            "id": 20203,
+            "name": "Hot Shots",
+            "episodeNumber": 3,
+            "airDate": "2003-06-15",
+            "runtime": 60
+          },
+          {
+            "id": 20204,
+            "name": "Hard Cases",
+            "episodeNumber": 4,
+            "airDate": "2003-06-22",
+            "runtime": 60
+          },
+          {
+            "id": 20205,
+            "name": "Undertow",
+            "episodeNumber": 5,
+            "airDate": "2003-06-29",
+            "runtime": 60
+          },
+          {
+            "id": 20206,
+            "name": "All Prologue",
+            "episodeNumber": 6,
+            "airDate": "2003-07-06",
+            "runtime": 60
+          },
+          {
+            "id": 20207,
+            "name": "Backwash",
+            "episodeNumber": 7,
+            "airDate": "2003-07-13",
+            "runtime": 60
+          },
+          {
+            "id": 20208,
+            "name": "Duck and Cover",
+            "episodeNumber": 8,
+            "airDate": "2003-07-27",
+            "runtime": 60
+          },
+          {
+            "id": 20209,
+            "name": "Stray Rounds",
+            "episodeNumber": 9,
+            "airDate": "2003-08-03",
+            "runtime": 60
+          },
+          {
+            "id": 20210,
+            "name": "Storm Warnings",
+            "episodeNumber": 10,
+            "airDate": "2003-08-10",
+            "runtime": 60
+          },
+          {
+            "id": 20211,
+            "name": "Bad Dreams",
+            "episodeNumber": 11,
+            "airDate": "2003-08-17",
+            "runtime": 60
+          },
+          {
+            "id": 20212,
+            "name": "Port in a Storm",
+            "episodeNumber": 12,
+            "airDate": "2003-08-24",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 203,
+        "name": "Season 3",
+        "seasonNumber": 3,
+        "year": 2004,
+        "episodes": [
+          {
+            "id": 20301,
+            "name": "Time After Time",
+            "episodeNumber": 1,
+            "airDate": "2004-09-19",
+            "runtime": 60
+          },
+          {
+            "id": 20302,
+            "name": "All Due Respect",
+            "episodeNumber": 2,
+            "airDate": "2004-09-26",
+            "runtime": 60
+          },
+          {
+            "id": 20303,
+            "name": "Dead Soldiers",
+            "episodeNumber": 3,
+            "airDate": "2004-10-03",
+            "runtime": 60
+          },
+          {
+            "id": 20304,
+            "name": "Hamsterdam",
+            "episodeNumber": 4,
+            "airDate": "2004-10-10",
+            "runtime": 60
+          },
+          {
+            "id": 20305,
+            "name": "Straight and True",
+            "episodeNumber": 5,
+            "airDate": "2004-10-17",
+            "runtime": 60
+          },
+          {
+            "id": 20306,
+            "name": "Homecoming",
+            "episodeNumber": 6,
+            "airDate": "2004-10-31",
+            "runtime": 60
+          },
+          {
+            "id": 20307,
+            "name": "Back Burners",
+            "episodeNumber": 7,
+            "airDate": "2004-11-07",
+            "runtime": 60
+          },
+          {
+            "id": 20308,
+            "name": "Moral Midgetry",
+            "episodeNumber": 8,
+            "airDate": "2004-11-14",
+            "runtime": 60
+          },
+          {
+            "id": 20309,
+            "name": "Slapstick",
+            "episodeNumber": 9,
+            "airDate": "2004-11-21",
+            "runtime": 60
+          },
+          {
+            "id": 20310,
+            "name": "Reformation",
+            "episodeNumber": 10,
+            "airDate": "2004-11-28",
+            "runtime": 60
+          },
+          {
+            "id": 20311,
+            "name": "Middle Ground",
+            "episodeNumber": 11,
+            "airDate": "2004-12-12",
+            "runtime": 60
+          },
+          {
+            "id": 20312,
+            "name": "Mission Accomplished",
+            "episodeNumber": 12,
+            "airDate": "2004-12-19",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 204,
+        "name": "Season 4",
+        "seasonNumber": 4,
+        "year": 2006,
+        "episodes": [
+          {
+            "id": 20401,
+            "name": "Boys of Summer",
+            "episodeNumber": 1,
+            "airDate": "2006-09-10",
+            "runtime": 60
+          },
+          {
+            "id": 20402,
+            "name": "Soft Eyes",
+            "episodeNumber": 2,
+            "airDate": "2006-09-17",
+            "runtime": 60
+          },
+          {
+            "id": 20403,
+            "name": "Home Rooms",
+            "episodeNumber": 3,
+            "airDate": "2006-09-24",
+            "runtime": 60
+          },
+          {
+            "id": 20404,
+            "name": "Refugees",
+            "episodeNumber": 4,
+            "airDate": "2006-10-01",
+            "runtime": 60
+          },
+          {
+            "id": 20405,
+            "name": "Alliances",
+            "episodeNumber": 5,
+            "airDate": "2006-10-08",
+            "runtime": 60
+          },
+          {
+            "id": 20406,
+            "name": "Margin of Error",
+            "episodeNumber": 6,
+            "airDate": "2006-10-15",
+            "runtime": 60
+          },
+          {
+            "id": 20407,
+            "name": "Unto Others",
+            "episodeNumber": 7,
+            "airDate": "2006-10-29",
+            "runtime": 60
+          },
+          {
+            "id": 20408,
+            "name": "Corner Boys",
+            "episodeNumber": 8,
+            "airDate": "2006-11-05",
+            "runtime": 60
+          },
+          {
+            "id": 20409,
+            "name": "Know Your Place",
+            "episodeNumber": 9,
+            "airDate": "2006-11-12",
+            "runtime": 60
+          },
+          {
+            "id": 20410,
+            "name": "Misgivings",
+            "episodeNumber": 10,
+            "airDate": "2006-11-19",
+            "runtime": 60
+          },
+          {
+            "id": 20411,
+            "name": "A New Day",
+            "episodeNumber": 11,
+            "airDate": "2006-11-26",
+            "runtime": 60
+          },
+          {
+            "id": 20412,
+            "name": "That's Got His Own",
+            "episodeNumber": 12,
+            "airDate": "2006-12-03",
+            "runtime": 60
+          },
+          {
+            "id": 20413,
+            "name": "Final Grades",
+            "episodeNumber": 13,
+            "airDate": "2006-12-10",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 205,
+        "name": "Season 5",
+        "seasonNumber": 5,
+        "year": 2008,
+        "episodes": [
+          {
+            "id": 20501,
+            "name": "More with Less",
+            "episodeNumber": 1,
+            "airDate": "2008-01-06",
+            "runtime": 60
+          },
+          {
+            "id": 20502,
+            "name": "Unconfirmed Reports",
+            "episodeNumber": 2,
+            "airDate": "2008-01-13",
+            "runtime": 60
+          },
+          {
+            "id": 20503,
+            "name": "Not for Attribution",
+            "episodeNumber": 3,
+            "airDate": "2008-01-20",
+            "runtime": 60
+          },
+          {
+            "id": 20504,
+            "name": "Transitions",
+            "episodeNumber": 4,
+            "airDate": "2008-01-27",
+            "runtime": 60
+          },
+          {
+            "id": 20505,
+            "name": "React Quotes",
+            "episodeNumber": 5,
+            "airDate": "2008-02-03",
+            "runtime": 60
+          },
+          {
+            "id": 20506,
+            "name": "The Dickensian Aspect",
+            "episodeNumber": 6,
+            "airDate": "2008-02-10",
+            "runtime": 60
+          },
+          {
+            "id": 20507,
+            "name": "Took",
+            "episodeNumber": 7,
+            "airDate": "2008-02-17",
+            "runtime": 60
+          },
+          {
+            "id": 20508,
+            "name": "Clarifications",
+            "episodeNumber": 8,
+            "airDate": "2008-02-24",
+            "runtime": 60
+          },
+          {
+            "id": 20509,
+            "name": "Late Editions",
+            "episodeNumber": 9,
+            "airDate": "2008-03-02",
+            "runtime": 60
+          },
+          {
+            "id": 20510,
+            "name": "-30-",
+            "episodeNumber": 10,
+            "airDate": "2008-03-09",
+            "runtime": 60
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "The Sopranos",
+    "network": "HBO",
+    "premiered": 1999,
+    "genre": "Drama, Crime",
+    "seasons": [
+      {
+        "id": 301,
+        "name": "Season 1",
+        "seasonNumber": 1,
+        "year": 1999,
+        "episodes": [
+          {
+            "id": 30101,
+            "name": "Pilot",
+            "episodeNumber": 1,
+            "airDate": "1999-01-10",
+            "runtime": 60
+          },
+          {
+            "id": 30102,
+            "name": "46 Long",
+            "episodeNumber": 2,
+            "airDate": "1999-01-17",
+            "runtime": 60
+          },
+          {
+            "id": 30103,
+            "name": "Denial, Anger, Acceptance",
+            "episodeNumber": 3,
+            "airDate": "1999-01-24",
+            "runtime": 60
+          },
+          {
+            "id": 30104,
+            "name": "Meadowlands",
+            "episodeNumber": 4,
+            "airDate": "1999-01-31",
+            "runtime": 60
+          },
+          {
+            "id": 30105,
+            "name": "College",
+            "episodeNumber": 5,
+            "airDate": "1999-02-07",
+            "runtime": 60
+          },
+          {
+            "id": 30106,
+            "name": "Pax Soprana",
+            "episodeNumber": 6,
+            "airDate": "1999-02-14",
+            "runtime": 60
+          },
+          {
+            "id": 30107,
+            "name": "Down Neck",
+            "episodeNumber": 7,
+            "airDate": "1999-02-21",
+            "runtime": 60
+          },
+          {
+            "id": 30108,
+            "name": "The Legend of Tennessee Moltisanti",
+            "episodeNumber": 8,
+            "airDate": "1999-02-28",
+            "runtime": 60
+          },
+          {
+            "id": 30109,
+            "name": "Boca",
+            "episodeNumber": 9,
+            "airDate": "1999-03-07",
+            "runtime": 60
+          },
+          {
+            "id": 30110,
+            "name": "A Hit is a Hit",
+            "episodeNumber": 10,
+            "airDate": "1999-03-14",
+            "runtime": 60
+          },
+          {
+            "id": 30111,
+            "name": "Nobody Knows Anything",
+            "episodeNumber": 11,
+            "airDate": "1999-03-21",
+            "runtime": 60
+          },
+          {
+            "id": 30112,
+            "name": "Isabella",
+            "episodeNumber": 12,
+            "airDate": "1999-03-28",
+            "runtime": 60
+          },
+          {
+            "id": 30113,
+            "name": "I Dream of Jeannie Cusamano",
+            "episodeNumber": 13,
+            "airDate": "1999-04-04",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 302,
+        "name": "Season 2",
+        "seasonNumber": 2,
+        "year": 2000,
+        "episodes": [
+          {
+            "id": 30201,
+            "name": "Guy Walks Into a Psychiatrist's Office",
+            "episodeNumber": 1,
+            "airDate": "2000-01-16",
+            "runtime": 60
+          },
+          {
+            "id": 30202,
+            "name": "Do Not Resuscitate",
+            "episodeNumber": 2,
+            "airDate": "2000-01-23",
+            "runtime": 60
+          },
+          {
+            "id": 30203,
+            "name": "Toodle-Fucking-Oo",
+            "episodeNumber": 3,
+            "airDate": "2000-01-30",
+            "runtime": 60
+          },
+          {
+            "id": 30204,
+            "name": "Commendatori",
+            "episodeNumber": 4,
+            "airDate": "2000-02-06",
+            "runtime": 60
+          },
+          {
+            "id": 30205,
+            "name": "Big Girls Don't Cry",
+            "episodeNumber": 5,
+            "airDate": "2000-02-13",
+            "runtime": 60
+          },
+          {
+            "id": 30206,
+            "name": "The Happy Wanderer",
+            "episodeNumber": 6,
+            "airDate": "2000-02-20",
+            "runtime": 60
+          },
+          {
+            "id": 30207,
+            "name": "D-Girl",
+            "episodeNumber": 7,
+            "airDate": "2000-02-27",
+            "runtime": 60
+          },
+          {
+            "id": 30208,
+            "name": "Full Leather Jacket",
+            "episodeNumber": 8,
+            "airDate": "2000-03-05",
+            "runtime": 60
+          },
+          {
+            "id": 30209,
+            "name": "From Where to Eternity",
+            "episodeNumber": 9,
+            "airDate": "2000-03-12",
+            "runtime": 60
+          },
+          {
+            "id": 30210,
+            "name": "Bust Out",
+            "episodeNumber": 10,
+            "airDate": "2000-03-19",
+            "runtime": 60
+          },
+          {
+            "id": 30211,
+            "name": "House Arrest",
+            "episodeNumber": 11,
+            "airDate": "2000-03-26",
+            "runtime": 60
+          },
+          {
+            "id": 30212,
+            "name": "Knight in White Satin Armor",
+            "episodeNumber": 12,
+            "airDate": "2000-04-02",
+            "runtime": 60
+          },
+          {
+            "id": 30213,
+            "name": "Funhouse",
+            "episodeNumber": 13,
+            "airDate": "2000-04-09",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 303,
+        "name": "Season 3",
+        "seasonNumber": 3,
+        "year": 2001,
+        "episodes": [
+          {
+            "id": 30301,
+            "name": "Mr. Ruggerio's Neighborhood",
+            "episodeNumber": 1,
+            "airDate": "2001-03-04",
+            "runtime": 60
+          },
+          {
+            "id": 30302,
+            "name": "Proshai, Livushka",
+            "episodeNumber": 2,
+            "airDate": "2001-03-04",
+            "runtime": 60
+          },
+          {
+            "id": 30303,
+            "name": "Fortunate Son",
+            "episodeNumber": 3,
+            "airDate": "2001-03-11",
+            "runtime": 60
+          },
+          {
+            "id": 30304,
+            "name": "Employee of the Month",
+            "episodeNumber": 4,
+            "airDate": "2001-03-18",
+            "runtime": 60
+          },
+          {
+            "id": 30305,
+            "name": "Another Toothpick",
+            "episodeNumber": 5,
+            "airDate": "2001-03-25",
+            "runtime": 60
+          },
+          {
+            "id": 30306,
+            "name": "University",
+            "episodeNumber": 6,
+            "airDate": "2001-04-01",
+            "runtime": 60
+          },
+          {
+            "id": 30307,
+            "name": "Second Opinion",
+            "episodeNumber": 7,
+            "airDate": "2001-04-08",
+            "runtime": 60
+          },
+          {
+            "id": 30308,
+            "name": "He is Risen",
+            "episodeNumber": 8,
+            "airDate": "2001-04-15",
+            "runtime": 60
+          },
+          {
+            "id": 30309,
+            "name": "The Telltale Moozadell",
+            "episodeNumber": 9,
+            "airDate": "2001-04-22",
+            "runtime": 60
+          },
+          {
+            "id": 30310,
+            "name": "To Save Us All from Satan's Power",
+            "episodeNumber": 10,
+            "airDate": "2001-04-29",
+            "runtime": 60
+          },
+          {
+            "id": 30311,
+            "name": "Pine Barrens",
+            "episodeNumber": 11,
+            "airDate": "2001-05-06",
+            "runtime": 60
+          },
+          {
+            "id": 30312,
+            "name": "Amour Fou",
+            "episodeNumber": 12,
+            "airDate": "2001-05-13",
+            "runtime": 60
+          },
+          {
+            "id": 30313,
+            "name": "Army of One",
+            "episodeNumber": 13,
+            "airDate": "2001-05-20",
+            "runtime": 60
+          }
+        ]
+      },
+      {
+        "id": 304,
+        "name": "Season 4",
+        "seasonNumber": 4,
+        "year": 2002,
+        "episodes": [
+          {
+            "id": 30401,
+            "name": "For All Debts Public and Private",
+            "episodeNumber": 1,
+            "airDate": "2002-09-15",
+            "runtime": 60
+          },
+          {
+            "id": 30402,
+            "name": "No Show",
+            "episodeNumber": 2,
+            "airDate": "2002-09-22",
+            "runtime": 60
+          },
+          {
+            "id": 30403,
+            "name": "Christopher",
+            "episodeNumber": 3,
+            "airDate": "2002-09-29",
+            "runtime": 60
+          },
+          {
+            "id": 30404,
+            "name": "The Weight",
+            "episodeNumber": 4,
+            "airDate": "2002-10-06",
+            "runtime": 60
+          },
+          {
+            "id": 30405,
+            "name": "Pie-O-My",
+            "episodeNumber": 5,
+            "airDate": "2002-10-13",
+            "runtime": 60
+          },
+          {
+            "id": 30406,
+            "name": "Everybody Hurts",
+            "episodeNumber": 6,
+            "airDate": "2002-10-20",
+            "runtime": 60
+          },
+          {
+            "id": 30407,
+            "name": "Watching Too Much Television",
+            "episodeNumber": 7,
+            "airDate": "2002-10-27",
+            "runtime": 60
+          },
+          {
+            "id": 30408,
+            "name": "Mergers &amp; Acquisitions",
+            "episodeNumber": 8,
+            "airDate": "2002-11-03",
+            "runtime": 60
+          },
+          {
+            "id": 30409,
+            "name": "Whoever Did This",
+            "episodeNumber": 9,
+            "airDate": "2002-11-10",
+            "runtime": 60
+          },
+          {
+            "id": 30410,
+            "name": "The Strong, Silent Type",
+            "episodeNumber": 10,
+            "airDate": "2002-11-17",
+            "runtime": 60
+          },
+          {
+            "id": 30411,
+            "name": "Calling All Cars",
+            "episodeNumber": 11,
+            "airDate": "2002-11-24",
+            "runtime": 60
+          },
+          {
+            "id": 30412,
+            "name": "Eloise",
+            "episodeNumber": 12,
+            "airDate": "2002-12-01",
+            "runtime": 60
+          },
+          {
+            "id": 30413,
+            "name": "Whitecaps",
+            "episodeNumber": 13,
+            "airDate": "2002-12-08",
+            "runtime": 72
+          }
+        ]
+      },
+      {
+        "id": 305,
+        "name": "Season 5",
+        "seasonNumber": 5,
+        "year": 2004,
+        "episodes": [
+          {
+            "id": 30501,
+            "name": "Two Tonys",
+            "episodeNumber": 1,
+            "airDate": "2004-03-07",
+            "runtime": 54
+          },
+          {
+            "id": 30502,
+            "name": "Rat Pack",
+            "episodeNumber": 2,
+            "airDate": "2004-03-14",
+            "runtime": 57
+          },
+          {
+            "id": 30503,
+            "name": "Where's Johnny?",
+            "episodeNumber": 3,
+            "airDate": "2004-03-21",
+            "runtime": 55
+          },
+          {
+            "id": 30504,
+            "name": "All Happy Families...",
+            "episodeNumber": 4,
+            "airDate": "2004-03-28",
+            "runtime": 53
+          },
+          {
+            "id": 30505,
+            "name": "Irregular Around the Margins",
+            "episodeNumber": 5,
+            "airDate": "2004-04-04",
+            "runtime": 52
+          },
+          {
+            "id": 30506,
+            "name": "Sentimental Education",
+            "episodeNumber": 6,
+            "airDate": "2004-04-11",
+            "runtime": 55
+          },
+          {
+            "id": 30507,
+            "name": "In Camelot",
+            "episodeNumber": 7,
+            "airDate": "2004-04-18",
+            "runtime": 55
+          },
+          {
+            "id": 30508,
+            "name": "Marco Polo",
+            "episodeNumber": 8,
+            "airDate": "2004-04-25",
+            "runtime": 54
+          },
+          {
+            "id": 30509,
+            "name": "Unidentified Black Males",
+            "episodeNumber": 9,
+            "airDate": "2004-05-02",
+            "runtime": 59
+          },
+          {
+            "id": 30510,
+            "name": "Cold Cuts",
+            "episodeNumber": 10,
+            "airDate": "2004-05-09",
+            "runtime": 52
+          },
+          {
+            "id": 30511,
+            "name": "The Test Dream",
+            "episodeNumber": 11,
+            "airDate": "2004-05-16",
+            "runtime": 50
+          },
+          {
+            "id": 30512,
+            "name": "Long Term Parking",
+            "episodeNumber": 12,
+            "airDate": "2004-05-23",
+            "runtime": 57
+          },
+          {
+            "id": 30513,
+            "name": "All Due Respect",
+            "episodeNumber": 13,
+            "airDate": "2004-06-06",
+            "runtime": 56
+          }
+        ]
+      },
+      {
+        "id": 306,
+        "name": "Season 6",
+        "seasonNumber": 6,
+        "year": 2006,
+        "episodes": [
+          {
+            "id": 30601,
+            "name": "Members Only",
+            "episodeNumber": 1,
+            "airDate": "2006-03-12",
+            "runtime": 53
+          },
+          {
+            "id": 30602,
+            "name": "Join the Club",
+            "episodeNumber": 2,
+            "airDate": "2006-03-19",
+            "runtime": 54
+          },
+          {
+            "id": 30603,
+            "name": "Mayham",
+            "episodeNumber": 3,
+            "airDate": "2006-03-26",
+            "runtime": 57
+          },
+          {
+            "id": 30604,
+            "name": "The Fleshy Part of the Thigh",
+            "episodeNumber": 4,
+            "airDate": "2006-04-02",
+            "runtime": 60
+          },
+          {
+            "id": 30605,
+            "name": "Mr. & Mrs. John Sacrimoni Request...",
+            "episodeNumber": 5,
+            "airDate": "2006-04-09",
+            "runtime": 53
+          },
+          {
+            "id": 30606,
+            "name": "Live Free or Die",
+            "episodeNumber": 6,
+            "airDate": "2006-04-16",
+            "runtime": 58
+          },
+          {
+            "id": 30607,
+            "name": "Luxury Lounge",
+            "episodeNumber": 7,
+            "airDate": "2006-04-23",
+            "runtime": 55
+          },
+          {
+            "id": 30608,
+            "name": "Johnny Cakes",
+            "episodeNumber": 8,
+            "airDate": "2006-04-30",
+            "runtime": 55
+          },
+          {
+            "id": 30609,
+            "name": "The Ride",
+            "episodeNumber": 9,
+            "airDate": "2006-05-07",
+            "runtime": 54
+          },
+          {
+            "id": 30610,
+            "name": "Moe n' Joe",
+            "episodeNumber": 10,
+            "airDate": "2006-05-14",
+            "runtime": 54
+          },
+          {
+            "id": 30611,
+            "name": "Cold Stones",
+            "episodeNumber": 11,
+            "airDate": "2006-05-21",
+            "runtime": 57
+          },
+          {
+            "id": 30612,
+            "name": "Kaisha",
+            "episodeNumber": 12,
+            "airDate": "2006-06-04",
+            "runtime": 59
+          },
+          {
+            "id": 30613,
+            "name": "Soprano Home Movies",
+            "episodeNumber": 13,
+            "airDate": "2007-04-08",
+            "runtime": 50
+          },
+          {
+            "id": 30614,
+            "name": "Stage 5",
+            "episodeNumber": 14,
+            "airDate": "2007-04-15",
+            "runtime": 55
+          },
+          {
+            "id": 30615,
+            "name": "Remember When",
+            "episodeNumber": 15,
+            "airDate": "2007-04-22",
+            "runtime": 56
+          },
+          {
+            "id": 30616,
+            "name": "Chasing It",
+            "episodeNumber": 16,
+            "airDate": "2007-04-29",
+            "runtime": 52
+          },
+          {
+            "id": 30617,
+            "name": "Walk Like a Man",
+            "episodeNumber": 17,
+            "airDate": "2007-05-06",
+            "runtime": 58
+          },
+          {
+            "id": 30618,
+            "name": "Kennedy and Heidi",
+            "episodeNumber": 18,
+            "airDate": "2007-05-13",
+            "runtime": 55
+          },
+          {
+            "id": 30619,
+            "name": "The Second Coming",
+            "episodeNumber": 19,
+            "airDate": "2007-05-20",
+            "runtime": 55
+          },
+          {
+            "id": 30620,
+            "name": "The Blue Comet",
+            "episodeNumber": 20,
+            "airDate": "2007-06-03",
+            "runtime": 53
+          },
+          {
+            "id": 30621,
+            "name": "Made in America",
+            "episodeNumber": 21,
+            "airDate": "2007-06-10",
+            "runtime": 62
+          }
+        ]
+      }
+    ]
+  }
+]
