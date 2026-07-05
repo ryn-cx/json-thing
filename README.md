@@ -42,7 +42,7 @@ impossible to navigate.
 The table UI is built with and inspired by [tablecn](https://tablecn.com) by
 [sadmann7](https://github.com/sadmann7/tablecn).
 
-# Technology
+# Technology Used
 
 - **[DataTables](https://datatables.net)**
 - **[Bulma](https://bulma.io)**
