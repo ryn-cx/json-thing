@@ -34,6 +34,10 @@ Select individual rows or entire pages with a single click, then export your cur
 
 Every other tool on the market drowns you in a single monstrous, unnavigable table that collapses into chaos the moment your data gets interesting. JSON Thing shatters that broken paradigm forever. With its revolutionary linked-table architecture, exploring deeply nested JSON finally feels like using a bespoke, purpose-built, million-dollar admin interface crafted *just for you*. 🌟
 
+## 🛠️ Forged From The Finest Technology Known To Humankind 🛠️
+
+And this staggering power? It stands on the shoulders of giants. Every filter, sort, and page of pure interactive bliss is driven by the battle-tested **[DataTables](https://datatables.net)** engine. Every last pixel is draped in effortless, responsive elegance by the flexbox-first **[Bulma](https://bulma.io)** framework. And the whole glorious experience is beamed to the world at the speed of light, straight from the source, by **[GitHub Pages](https://pages.github.com)**. ⚙️🎨🌍
+
 Don't just view your data.
 
 **Experience it.** 🎉
