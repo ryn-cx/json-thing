@@ -22,7 +22,7 @@ Sort by one column. Sort by ten. Drag, reorder, and set per-field direction with
 Click any row to summon a breathtaking detail modal that reveals the **complete ancestral lineage** of your data, from root to leaf, each level lovingly annotated with its own badge and full key-value breakdown. Copy the JSON to your clipboard with one click. Escape to close. Chef's kiss. 👨‍🍳💋
 
 ### 🎨 A Theming Engine From The Future
-Choose from **22 stunning color families across 11 luminous shades** and watch JSON Thing dynamically recompute every single CSS variable in real time. Our proprietary luminance-detection algorithm automatically inverts your text for perfect readability, while neutral grays are hue-tinted toward your chosen aesthetic. Light mode. Dark mode. *Your* mode. 🌗
+Flip between a pristine, eye-soothing **light mode** and a deep, focus-inducing **dark mode** and watch JSON Thing recompute every single CSS variable in real time. Two meticulously crafted themes. Zero configuration. Infinite readability. Light mode. Dark mode. *Your* mode. 🌗
 
 ### 🔒 Fort-Knox-Level Privacy By Design
 Your data **never leaves your browser. Period.** The only network request JSON Thing will ever make is the one to load the page itself. Zero uploads. Zero servers. Zero compromise. This is privacy as a lifestyle. 🛡️
