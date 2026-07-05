@@ -873,7 +873,7 @@ function buildColumnModel(mt, onDrill, facetMax=DEFAULT_FACET_MAX, onParent){
 /* =====================================================================
  * row detail modal — full parent tree + every field as a key/value table
  * ===================================================================== */
-function DetailModal({detail, getRow, onClose}){
+function DetailModal({detail, getRow, onClose, onNavigate}){
   useEffect(()=>{
     const key=e=>{ if(e.key==='Escape') onClose(); };
     document.addEventListener('keydown',key);
@@ -918,7 +918,11 @@ function DetailModal({detail, getRow, onClose}){
           return <div key={idx} className="border-b last:border-0">
             <div className="sticky top-0 z-10 flex items-center gap-2 border-b bg-muted/60 px-4 py-2 backdrop-blur">
               <Badge variant="secondary" className="rounded-sm font-normal">{e.table}</Badge>
-              <span className="truncate text-sm font-semibold">{name}</span>
+              {onNavigate && id!==''
+                ? <button type="button" title={`Go to the ${e.table} table`}
+                    onClick={()=>{ onNavigate(e.table, r?r.__id:e.fallback.id, name); onClose(); }}
+                    className="truncate text-left text-sm font-semibold text-primary underline decoration-primary/40 underline-offset-2 hover:decoration-primary">{name}</button>
+                : <span className="truncate text-sm font-semibold">{name}</span>}
               {id!=='' && <span className="font-mono text-[10px] text-muted-foreground">#{id}</span>}
               <Badge variant={idx===0?'default':'outline'} className="ml-auto shrink-0 rounded-sm text-[10px] font-normal">{levelLabel(idx)}</Badge>
             </div>
@@ -1101,7 +1105,7 @@ function DataTable({mt, frame, onDrill, onParent, getRow, filterMode, setFilterM
       </div>}
 
     {/* row detail modal */}
-    <DetailModal detail={detail} getRow={getRow} onClose={()=>setDetail(null)}/>
+    <DetailModal detail={detail} getRow={getRow} onClose={()=>setDetail(null)} onNavigate={onParent}/>
   </div>;
 }
 
