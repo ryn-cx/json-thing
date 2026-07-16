@@ -37,11 +37,6 @@ Thing's usage of linked tables makes it feel like you are using a custom made ad
 interface instead of a single table/list/graph that quickly becomes complex and
 impossible to navigate.
 
-# Credits
-
-The table UI is built with and inspired by [tablecn](https://tablecn.com) by
-[sadmann7](https://github.com/sadmann7/tablecn).
-
 # Technology Used
 
 - **[DataTables](https://datatables.net)**
